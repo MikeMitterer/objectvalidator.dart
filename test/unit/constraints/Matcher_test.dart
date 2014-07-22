@@ -1,0 +1,123 @@
+part of unit.test;
+
+/**
+ *
+ */
+
+testMatchers() {
+    final Logger logger = new Logger("test.Matchers");
+
+    group('Matchers', () {
+
+        group('> Range', () {
+
+            test('> in Range', () {
+                expect(20.0, isInRangeBetween10And40);
+                expect(-50.0, isInRange(-50.0, 50.0));
+            }); // end of 'Range' test
+
+            test('> Not in Range', () {
+                expect(-10.1, isNot(const Range(start: -10.0, end: 40.0, message: "Test")));
+                expect(-50.1, isNot(isInRange(-50.0, 50.0)));
+            });
+            // end of 'Not in Range' test
+
+        }); // End of 'Range' group
+
+        group('> NotNull', () {
+
+            test('> NotNull', () {
+                expect("Hallo", const NotNull(message: "Test again"));
+                expect(0, const NotNull(message: "Test again"));
+            }); // end of 'NotNull' test
+
+            test('> Null', () {
+                expect(null, isNot(const NotNull(message: "Test again")));
+            });
+            // end of 'Null' test
+
+        }); // End of '> NotNull' group
+
+
+        group('> eMail', () {
+
+            test('> Valid eMail', () {
+                expect("office@mikemitterer.at", const EMail(message: "Hier nicht notwendig"));
+                expect("office@mikemitterer.at", isEMail);
+            }); // end of 'Valid eMail' test
+
+            test('> Invalid eMail', () {
+                expect("office@mikemitterer.localhostx", isNot(const EMail(message: "Hier nicht notwendig")));
+                expect("office-mikemitterer.at", isNot(isEMail));
+            });
+            // end of 'Invalid eMail' test
+
+        });
+        // End of '> eMail' group
+
+        group('> Uuid', () {
+            final String v3UUID = "c87ee674-4ddc-3efe-a74e-dfe25da5d7b3";
+            final String v4UUID = "eab27287-508f-42f1-9d69-f2d911a5154c";
+
+            test('> Valid UUID', () {
+                expect(v4UUID, const Uuid(message: "Hier nicht notwendig"));
+                expect(v4UUID, isUuid);
+            }); // end of 'Valid UUID' test
+
+            test('> Invalid UUID', () {
+                expect("Hallo", isNot(const Uuid(message: "Hier nicht notwendig")));
+                expect(null, isNot(isUuid));
+            });
+            // end of 'Invalid UUID' test
+
+        });
+        // End of '> Uuid' group
+
+        group('> NotEmpty', () {
+
+            test('> NotEmpty', () {
+                expect("Hallo", const NotEmpty(message: "Hier nicht notwendig"));
+                expect("Hallo", isNotEmpty);
+            }); // end of 'NotEmpty' test
+
+            test('> NotEmptyWithList', () {
+                expect(new List<String>()..add("Test"), const NotEmpty(message: "Hier nicht notwendig"));
+            }); // end of 'NotEmptyWithList' test
+
+            test('> Empty', () {
+                expect(10, isNot(const NotEmpty(message: "Hier nicht notwendig")));
+                expect("", isNot(const NotEmpty(message: "Hier nicht notwendig")));
+                expect(null, isNot(isNotEmpty));
+                expect(new List<String>(), isNot(const NotEmpty(message: "Hier nicht notwendig")));
+            }); // end of 'Empty' test
+
+        });
+        // End of '> NotEmpty' group
+
+        group('> VObject', () {
+//            final Location location = new Location(20.0,40.0);
+//
+//            test('> IsValid', () {
+//                expect(location, const VObject(message: "Hier nicht notwendig"));
+//                expect(location, isVObjectValid);
+//            }); // end of 'IsValid' test
+
+            test('> Invalid', () {
+                expect(null, isNot(const VObject(message: "Hier nicht notwendig")));
+
+                // Sollte (nach der Implementierung von ValidatorBean) nicht auskommentiert sein
+                //expect("Hallo", isNot(isVObjectValid));
+                //expect(10, isNot(isVObjectValid));
+            }); // end of 'Invalid' test
+
+        });
+        // End of '> VObject' group
+    });
+    // End of 'Matchers' group
+
+
+}
+
+//------------------------------------------------------------------------------------------------
+// Helper
+//------------------------------------------------------------------------------------------------

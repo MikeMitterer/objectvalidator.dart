@@ -1,0 +1,12 @@
+name: beanvalidator
+
+dependencies:
+  browser: any
+
+  matcher: ">=0.10.1+1 <0.11.0"
+
+  logging: any
+  logging_handlers: any
+
+dev_dependencies:
+  unittest: any
