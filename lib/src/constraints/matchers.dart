@@ -20,7 +20,7 @@ class Range extends Constraint {
     /// matchState can be supplied and may be used to add details about the mismatch
     /// that are too costly to determine in describeMismatch.
     bool matches(item, Map matchState) {
-
+        //const L10N message = const L10N.withVars("test.message","Hallo Mike",const {} );
         bool checkTyped(final value) {
             return value >= start && value <= end;
         }
@@ -32,7 +32,9 @@ class Range extends Constraint {
 
 /// Nur zum testen in den Unit-Tests
 /// Sample: expect(20.0, isInRangeBetween10And40);
-final Matcher isInRangeBetween10And40 = new Range(start: 10.0, end: 40.0, message: l10n("matcher.isinrangebetween10an40","Test"));
+//const L10N message = const L10N("test.message","Hallo Mike");
+//const L10N l = const L10N("kkk","kkddk");
+const Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, message: const L10N("matcher.isinrangebetween10an40","Test") );
 
 /// Sample für Unit-Tests:
 ///     expect(-50.1,isNot(isInRange(-50.0,50.0)));
@@ -77,7 +79,7 @@ class EMail extends Pattern {
     Description describe(Description description) => description.add("Not a valid email address");
 }
 
-final Matcher isEMail = new EMail(message: l10n("matcher.isemail","Nur für Annotation!"));
+const Matcher isEMail = const EMail(message: const L10N("matcher.isemail","Nur für Annotation!"));
 
 class Uuid extends Pattern {
     static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
@@ -87,7 +89,7 @@ class Uuid extends Pattern {
     Description describe(Description description) => description.add("Not a valid v4 UUID");
 }
 
-final Matcher isUuid = new Uuid(message: l10n("matcher.isuuid","Nur für Annotation!"));
+const Matcher isUuid = const Uuid(message: const L10N("matcher.isuuid","Nur für Annotation!"));
 
 class NotEmpty extends Constraint {
 
@@ -110,7 +112,7 @@ class NotEmpty extends Constraint {
     Description describe(Description description) => description.add("Must not be empty");
 }
 
-final Matcher isNotEmpty = new NotEmpty(message: l10n("macher.isnotempty","Nur für Annontation"));
+const Matcher isNotEmpty = const NotEmpty(message: const L10N("macher.isnotempty","Nur für Annontation"));
 
 /// Dient nur als "Marker" für eine "Unter-Validation-Object" - darf prinzipiell nicht null sein
 class VObject extends Constraint {
@@ -129,7 +131,7 @@ class VObject extends Constraint {
     Description describe(Description description) => description.add("Must not be null");
 }
 
-final Matcher isVObjectValid = new VObject(message: l10n("matcher.isvobjectvalid","Nur für Annotation"));
+const Matcher isVObjectValid = const VObject(message: const L10N("matcher.isvobjectvalid","Nur für Annotation"));
 
 
 class MinLenght extends Constraint {

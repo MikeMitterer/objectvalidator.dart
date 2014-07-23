@@ -2,8 +2,8 @@ part of unit.test;
 
 class Name {
 
-    @NotEmpty( message: const L10NImpl("firstname.notempty", "Firstname must not be {{what}}",const { "what" : "EMPTY"} ))
-    @MinLenght(message: const L10NImpl("firstname.minlength","Firstname (%value%) must be at least 4 characters long"),minLength: 4)
+    @NotEmpty( message: const L10N("firstname.notempty", "Firstname must not be {{what}}",const { "what" : "EMPTY"} ))
+    @MinLenght(message: const L10N("firstname.minlength","Firstname (%value%) must be at least 4 characters long"),minLength: 4)
     final String firstname;
 
     Name(this.firstname);
@@ -36,6 +36,8 @@ testBeanValidator() {
         expect(violationInfos.length,1);
 
         expect(violationInfos[0].message,"Firstname (abc) must be at least 4 characters long");
+
+        //const L10N message = const L10N("test.message","Hallo Mike");
 
     }); // end of 'Name - not empty' test
 
