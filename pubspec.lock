@@ -27,6 +27,12 @@ packages:
     description: intl
     source: hosted
     version: "0.11.2"
+  l10n:
+    description:
+      path: "/Volumes/Daten/DevLocal/DevDart/L10N"
+      relative: false
+    source: path
+    version: "0.0.0"
   logging:
     description: logging
     source: hosted

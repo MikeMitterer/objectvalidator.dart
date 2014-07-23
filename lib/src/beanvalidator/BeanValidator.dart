@@ -51,13 +51,13 @@ class BeanValidator<T> {
                             if(mirror != null && mirror is InstanceMirror) {
                                 final value = mirror.getField(member.simpleName).reflectee;
                                 final bool matches = constraint.matches(value, { } );
-                                final String message = constraint.message;
+                                final L10N l10n = constraint.l10n;
 
                                 _logger.info("               Value: ${value}");
                                 _logger.info("                   Matches: " + (matches ? "yes" : "no"));
 
                                 if(!matches) {
-                                    final ViolationInfo<T> violationinfo = new ViolationInfo<T>(simplename,message,value,obj);
+                                    final ViolationInfo<T> violationinfo = new ViolationInfo<T>(simplename,l10n,value,obj);
                                     violationinfos.add(violationinfo);
                                 }
                             }

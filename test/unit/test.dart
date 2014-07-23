@@ -13,6 +13,7 @@ import 'package:unittest/html_enhanced_config.dart';
 //---------------------------------------------------------
 // Extra packages (piepag) (http_utils, validate, signer)
 //---------------------------------------------------------
+import 'package:l10n/l10n.dart';
 
 import 'package:beanvalidator/constraints.dart';
 import 'package:beanvalidator/beanvalidator.dart';

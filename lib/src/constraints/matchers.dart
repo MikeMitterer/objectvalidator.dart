@@ -2,10 +2,12 @@ part of beanvalidator.constraints;
 
 Matcher isBetweenMinus180AndPlus180() => allOf(greaterThanOrEqualTo(-180.0), lessThanOrEqualTo(180));
 
-abstract class Constraint extends Matcher {
-    final String message;
+abstract class Constraint extends Matcher implements Translatable {
+    final L10N message;
 
     const Constraint(this.message);
+
+    L10N get l10n => message;
 }
 
 /// Wird z.B. bei Location verwendet um die Grad auf -90 bzw. +90 zu begrenzen
@@ -13,7 +15,7 @@ class Range extends Constraint {
     final double start;
     final double end;
 
-    const Range({this.start, this.end, final String message}): super(message);
+    const Range({this.start, this.end, final L10N message}): super(message);
 
     /// matchState can be supplied and may be used to add details about the mismatch
     /// that are too costly to determine in describeMismatch.
@@ -30,15 +32,14 @@ class Range extends Constraint {
 
 /// Nur zum testen in den Unit-Tests
 /// Sample: expect(20.0, isInRangeBetween10And40);
-const Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, message: "Test");
+final Matcher isInRangeBetween10And40 = new Range(start: 10.0, end: 40.0, message: l10n("matcher.isinrangebetween10an40","Test"));
 
 /// Sample für Unit-Tests:
 ///     expect(-50.1,isNot(isInRange(-50.0,50.0)));
-
-Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: "Test");
+Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: l10n("matcher.isinrance","Test"));
 
 class NotNull extends Constraint {
-    const NotNull({ final String message}) : super(message);
+    const NotNull({ final L10N message}) : super(message);
 
     bool matches(item, Map matchState) {
         return item != null;
@@ -53,7 +54,7 @@ class Pattern extends Constraint {
 
     final String pattern;
 
-    const Pattern({this.pattern, final String message}) : super(message);
+    const Pattern({this.pattern, final L10N message}) : super(message);
 
     bool matches(item, Map matchState) {
         final RegExp regexp = new RegExp(pattern);
@@ -71,26 +72,26 @@ class EMail extends Pattern {
 
     // ,9: TLD .localhost hat 9 Stellen
 
-    const EMail({final String message}) : super(pattern: _PATTERN_EMAIL, message: message);
+    const EMail({final L10N message}) : super(pattern: _PATTERN_EMAIL, message: message);
 
     Description describe(Description description) => description.add("Not a valid email address");
 }
 
-const Matcher isEMail = const EMail(message: "Nur für Annotation!");
+final Matcher isEMail = new EMail(message: l10n("matcher.isemail","Nur für Annotation!"));
 
 class Uuid extends Pattern {
     static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
 
-    const Uuid({final String message}) : super(pattern: _PATTERN_UUID, message: message);
+    const Uuid({final L10N message}) : super(pattern: _PATTERN_UUID, message: message);
 
     Description describe(Description description) => description.add("Not a valid v4 UUID");
 }
 
-const Matcher isUuid = const Uuid(message: "Nur für Annotation!");
+final Matcher isUuid = new Uuid(message: l10n("matcher.isuuid","Nur für Annotation!"));
 
 class NotEmpty extends Constraint {
 
-    const NotEmpty({final String message}) : super(message);
+    const NotEmpty({final L10N message}) : super(message);
 
     bool matches(item, Map matchState) {
         if (item == null) {
@@ -109,11 +110,11 @@ class NotEmpty extends Constraint {
     Description describe(Description description) => description.add("Must not be empty");
 }
 
-const Matcher isNotEmpty = const NotEmpty(message: "Nur für Annontation");
+final Matcher isNotEmpty = new NotEmpty(message: l10n("macher.isnotempty","Nur für Annontation"));
 
 /// Dient nur als "Marker" für eine "Unter-Validation-Object" - darf prinzipiell nicht null sein
 class VObject extends Constraint {
-    const VObject({final String message}) : super(message);
+    const VObject({final L10N message}) : super(message);
 
     bool matches(item, Map matchState) {
         return (item != null);
@@ -128,13 +129,13 @@ class VObject extends Constraint {
     Description describe(Description description) => description.add("Must not be null");
 }
 
-const Matcher isVObjectValid = const VObject(message: "Nur für Annotation");
+final Matcher isVObjectValid = new VObject(message: l10n("matcher.isvobjectvalid","Nur für Annotation"));
 
 
 class MinLenght extends Constraint {
     final int minLength;
 
-    const MinLenght({ this.minLength, final String message } ) : super(message);
+    const MinLenght({ this.minLength, final L10N message } ) : super(message);
 
 
     bool matches(item, Map matchState) {

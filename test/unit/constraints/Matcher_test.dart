@@ -17,7 +17,7 @@ testMatchers() {
             }); // end of 'Range' test
 
             test('> Not in Range', () {
-                expect(-10.1, isNot(const Range(start: -10.0, end: 40.0, message: "Test")));
+                expect(-10.1, isNot(new Range(start: -10.0, end: 40.0, message: l10n("no.key","Hier nicht notwendig"))));
                 expect(-50.1, isNot(isInRange(-50.0, 50.0)));
             });
             // end of 'Not in Range' test
@@ -27,12 +27,12 @@ testMatchers() {
         group('> NotNull', () {
 
             test('> NotNull', () {
-                expect("Hallo", const NotNull(message: "Test again"));
-                expect(0, const NotNull(message: "Test again"));
+                expect("Hallo", new NotNull(message: l10n("no.key","Hier nicht notwendig")));
+                expect(0, new NotNull(message: l10n("no.key","Hier nicht notwendig")));
             }); // end of 'NotNull' test
 
             test('> Null', () {
-                expect(null, isNot(const NotNull(message: "Test again")));
+                expect(null, isNot(new NotNull(message: l10n("no.key","Hier nicht notwendig"))));
             });
             // end of 'Null' test
 
@@ -42,12 +42,12 @@ testMatchers() {
         group('> eMail', () {
 
             test('> Valid eMail', () {
-                expect("office@mikemitterer.at", const EMail(message: "Hier nicht notwendig"));
+                expect("office@mikemitterer.at", new EMail(message: l10n("no.key","Hier nicht notwendig")));
                 expect("office@mikemitterer.at", isEMail);
             }); // end of 'Valid eMail' test
 
             test('> Invalid eMail', () {
-                expect("office@mikemitterer.localhostx", isNot(const EMail(message: "Hier nicht notwendig")));
+                expect("office@mikemitterer.localhostx", isNot(new EMail(message: l10n("no.key","Hier nicht notwendig"))));
                 expect("office-mikemitterer.at", isNot(isEMail));
             });
             // end of 'Invalid eMail' test
@@ -60,12 +60,12 @@ testMatchers() {
             final String v4UUID = "eab27287-508f-42f1-9d69-f2d911a5154c";
 
             test('> Valid UUID', () {
-                expect(v4UUID, const Uuid(message: "Hier nicht notwendig"));
+                expect(v4UUID, new Uuid(message: l10n("no.key","Hier nicht notwendig")));
                 expect(v4UUID, isUuid);
             }); // end of 'Valid UUID' test
 
             test('> Invalid UUID', () {
-                expect("Hallo", isNot(const Uuid(message: "Hier nicht notwendig")));
+                expect("Hallo", isNot(new Uuid(message: l10n("no.key","Hier nicht notwendig"))));
                 expect(null, isNot(isUuid));
             });
             // end of 'Invalid UUID' test
@@ -76,19 +76,19 @@ testMatchers() {
         group('> NotEmpty', () {
 
             test('> NotEmpty', () {
-                expect("Hallo", const NotEmpty(message: "Hier nicht notwendig"));
+                expect("Hallo", new NotEmpty(message: l10n("no.key","Hier nicht notwendig")));
                 expect("Hallo", isNotEmpty);
             }); // end of 'NotEmpty' test
 
             test('> NotEmptyWithList', () {
-                expect(new List<String>()..add("Test"), const NotEmpty(message: "Hier nicht notwendig"));
+                expect(new List<String>()..add("Test"), new NotEmpty(message: l10n("no.key","Hier nicht notwendig")));
             }); // end of 'NotEmptyWithList' test
 
             test('> Empty', () {
-                expect(10, isNot(const NotEmpty(message: "Hier nicht notwendig")));
-                expect("", isNot(const NotEmpty(message: "Hier nicht notwendig")));
+                expect(10, isNot(new NotEmpty(message: l10n("no.key","Hier nicht notwendig"))));
+                expect("", isNot(new NotEmpty(message: l10n("no.key","Hier nicht notwendig"))));
                 expect(null, isNot(isNotEmpty));
-                expect(new List<String>(), isNot(const NotEmpty(message: "Hier nicht notwendig")));
+                expect(new List<String>(), isNot(new NotEmpty(message: l10n("no.key","Hier nicht notwendig"))));
             }); // end of 'Empty' test
 
         });
@@ -98,12 +98,12 @@ testMatchers() {
 //            final Location location = new Location(20.0,40.0);
 //
 //            test('> IsValid', () {
-//                expect(location, const VObject(message: "Hier nicht notwendig"));
+//                expect(location, new VObject(message: l10n("no.key","Hier nicht notwendig")));
 //                expect(location, isVObjectValid);
 //            }); // end of 'IsValid' test
 
             test('> Invalid', () {
-                expect(null, isNot(const VObject(message: "Hier nicht notwendig")));
+                expect(null, isNot(new VObject(message: l10n("no.key","Hier nicht notwendig"))));
 
                 // Sollte (nach der Implementierung von ValidatorBean) nicht auskommentiert sein
                 //expect("Hallo", isNot(isVObjectValid));
@@ -116,11 +116,11 @@ testMatchers() {
         group('> MinLength', () {
 
             test('> Valid', () {
-                expect([ "Hallo", "Test" ], const MinLenght(minLength: 2,message: "Hier nicht notwendig"));
+                expect([ "Hallo", "Test" ], new MinLenght(minLength: 2,message: l10n("no.key","Hier nicht notwendig")));
             });
 
             test('> Invalid', () {
-                expect([ "Hallo", "Test" ], isNot(const MinLenght(minLength: 3,message: "Hier nicht notwendig")));
+                expect([ "Hallo", "Test" ], isNot(new MinLenght(minLength: 3,message: l10n("no.key","Hier nicht notwendig"))));
             }); // end of 'Invalid' test
 
 

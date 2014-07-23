@@ -5,8 +5,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/packages/beanvalidator" />
       <excludeFolder url="file://$MODULE_DIR$/packages/console_log_handler" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/l10n" />
       <excludeFolder url="file://$MODULE_DIR$/test/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/_resources/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/test/unit/beanvalidator/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/constraints/packages" />
       <excludeFolder url="file://$MODULE_DIR$/test/unit/packages" />
       <excludeFolder url="file://$MODULE_DIR$/web/packages" />

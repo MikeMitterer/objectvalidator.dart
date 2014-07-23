@@ -13,6 +13,9 @@ dependencies:
 
   validate: any
 
+  l10n:
+    path: /Volumes/Daten/DevLocal/DevDart/L10N
+
 dev_dependencies:
 
   unittest: any
