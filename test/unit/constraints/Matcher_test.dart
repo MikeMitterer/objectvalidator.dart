@@ -112,6 +112,20 @@ testMatchers() {
 
         });
         // End of '> VObject' group
+
+        group('> MinLength', () {
+
+            test('> Valid', () {
+                expect([ "Hallo", "Test" ], const MinLenght(minLength: 2,message: "Hier nicht notwendig"));
+            });
+
+            test('> Invalid', () {
+                expect([ "Hallo", "Test" ], isNot(const MinLenght(minLength: 3,message: "Hier nicht notwendig")));
+            }); // end of 'Invalid' test
+
+
+        });
+        // End of '> MinLength' group
     });
     // End of 'Matchers' group
 

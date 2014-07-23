@@ -8,13 +8,16 @@ import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
 
 import 'package:unittest/unittest.dart';
-//import 'package:unittest/html_enhanced_config.dart';
+import 'package:unittest/html_enhanced_config.dart';
 
 //---------------------------------------------------------
 // Extra packages (piepag) (http_utils, validate, signer)
 //---------------------------------------------------------
 
 import 'package:beanvalidator/constraints.dart';
+import 'package:beanvalidator/beanvalidator.dart';
+
+import 'package:console_log_handler/console_log_handler.dart';
 
 //---------------------------------------------------------
 // WebApp-Basis (piwab) - webapp_base_dart
@@ -48,25 +51,23 @@ import 'package:beanvalidator/constraints.dart';
 
 part 'constraints/Matcher_test.dart';
 part 'constraints/Constraints_test.dart';
-
+part 'beanvalidator/BeanValidator_test.dart';
 
 //-----------------------------------------------------------------------------
 // Test-Imports (find . -mindepth 2 -iname "*.dart" | sed "s/\.\///g" | sed "s/\(.*\)/part '\1';/g")
-
-
-
 
 
 // Mehr Infos: http://www.dartlang.org/articles/dart-unit-tests/
 void main() {
     final Logger logger = new Logger("test");
 
-    //useHtmlEnhancedConfiguration();
+    useHtmlEnhancedConfiguration();
     configLogging();
     //startQuickLogging();
 
     testMatchers();
     testConstraints();
+    testBeanValidator();
 }
 
 // Weitere Infos: https://github.com/chrisbu/logging_handlers#quick-reference
@@ -77,5 +78,5 @@ void configLogging() {
     // now control the logging.
     // Turn off all logging first
     Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogPrintHandler());
+    Logger.root.onRecord.listen(new LogConsoleHandler());
 }

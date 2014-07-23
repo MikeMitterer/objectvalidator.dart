@@ -15,6 +15,8 @@ class Range extends Constraint {
 
     const Range({this.start, this.end, final String message}): super(message);
 
+    /// matchState can be supplied and may be used to add details about the mismatch
+    /// that are too costly to determine in describeMismatch.
     bool matches(item, Map matchState) {
 
         bool checkTyped(final value) {
@@ -127,3 +129,35 @@ class VObject extends Constraint {
 }
 
 const Matcher isVObjectValid = const VObject(message: "Nur für Annotation");
+
+
+class MinLenght extends Constraint {
+    final int minLength;
+
+    const MinLenght({ this.minLength, final String message } ) : super(message);
+
+
+    bool matches(item, Map matchState) {
+        if(item == null || minLength < 0) {
+            return false;
+        }
+
+        if(item is String) {
+            return (item as String).length >= minLength;
+        }
+
+        if(item is Map) {
+            return (item as Map).length >= minLength;
+        }
+
+        if(item is Iterable) {
+            return (item as Iterable).length >= minLength;
+        }
+
+        return false;
+
+    }
+
+    Description describe(Description description) => description.add("Length must be at least $minLength");
+
+}
