@@ -49,6 +49,7 @@ import 'package:console_log_handler/console_log_handler.dart';
 //---------------------------------------------------------
 // Testimports (nur bei Unit-Tests)
 //
+part '_resources/TestClasses.dart';
 
 part 'constraints/Matcher_test.dart';
 part 'constraints/Constraints_test.dart';

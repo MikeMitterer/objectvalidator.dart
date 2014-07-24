@@ -3,11 +3,14 @@ part of beanvalidator.constraints;
 Matcher isBetweenMinus180AndPlus180() => allOf(greaterThanOrEqualTo(-180.0), lessThanOrEqualTo(180));
 
 abstract class Constraint extends Matcher implements Translatable {
+    /// Translatable message
     final L10N message;
 
     const Constraint(this.message);
 
     L10N get l10n => message;
+
+    String get valueToCheckAgainst;
 }
 
 /// Wird z.B. bei Location verwendet um die Grad auf -90 bzw. +90 zu begrenzen
@@ -20,7 +23,6 @@ class Range extends Constraint {
     /// matchState can be supplied and may be used to add details about the mismatch
     /// that are too costly to determine in describeMismatch.
     bool matches(item, Map matchState) {
-        //const L10N message = const L10N.withVars("test.message","Hallo Mike",const {} );
         bool checkTyped(final value) {
             return value >= start && value <= end;
         }
@@ -28,17 +30,17 @@ class Range extends Constraint {
     }
 
     Description describe(Description description) => description.add("Range to be between $start and $end");
+
+    String get valueToCheckAgainst => "$start / $end";
 }
 
 /// Nur zum testen in den Unit-Tests
 /// Sample: expect(20.0, isInRangeBetween10And40);
-//const L10N message = const L10N("test.message","Hallo Mike");
-//const L10N l = const L10N("kkk","kkddk");
 const Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, message: const L10N("matcher.isinrangebetween10an40","Test") );
 
 /// Sample für Unit-Tests:
 ///     expect(-50.1,isNot(isInRange(-50.0,50.0)));
-Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: l10n("matcher.isinrance","Test"));
+Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: l10n("matcher.isinrange","Test"));
 
 class NotNull extends Constraint {
     const NotNull({ final L10N message}) : super(message);
@@ -48,6 +50,8 @@ class NotNull extends Constraint {
     }
 
     Description describe(Description description) => description.add("Value must not be null!");
+
+    String get valueToCheckAgainst => "null";
 }
 
 class Pattern extends Constraint {
@@ -67,6 +71,8 @@ class Pattern extends Constraint {
     }
 
     Description describe(Description description) => description.add("$pattern not found");
+
+    String get valueToCheckAgainst => pattern;
 }
 
 class EMail extends Pattern {
@@ -77,6 +83,8 @@ class EMail extends Pattern {
     const EMail({final L10N message}) : super(pattern: _PATTERN_EMAIL, message: message);
 
     Description describe(Description description) => description.add("Not a valid email address");
+
+    String get valueToCheckAgainst => "email ($_PATTERN_EMAIL)";
 }
 
 const Matcher isEMail = const EMail(message: const L10N("matcher.isemail","Nur für Annotation!"));
@@ -87,6 +95,8 @@ class Uuid extends Pattern {
     const Uuid({final L10N message}) : super(pattern: _PATTERN_UUID, message: message);
 
     Description describe(Description description) => description.add("Not a valid v4 UUID");
+
+    String get valueToCheckAgainst => "UUID ($_PATTERN_UUID)";
 }
 
 const Matcher isUuid = const Uuid(message: const L10N("matcher.isuuid","Nur für Annotation!"));
@@ -110,6 +120,8 @@ class NotEmpty extends Constraint {
     }
 
     Description describe(Description description) => description.add("Must not be empty");
+
+    String get valueToCheckAgainst => "not empty";
 }
 
 const Matcher isNotEmpty = const NotEmpty(message: const L10N("macher.isnotempty","Nur für Annontation"));
@@ -129,6 +141,8 @@ class VObject extends Constraint {
     }
 
     Description describe(Description description) => description.add("Must not be null");
+
+    String get valueToCheckAgainst => "not empty";
 }
 
 const Matcher isVObjectValid = const VObject(message: const L10N("matcher.isvobjectvalid","Nur für Annotation"));
@@ -137,7 +151,8 @@ const Matcher isVObjectValid = const VObject(message: const L10N("matcher.isvobj
 class MinLenght extends Constraint {
     final int minLength;
 
-    const MinLenght({ this.minLength, final L10N message } ) : super(message);
+    const MinLenght( this.minLength ,{ final L10N message } ) :
+        super(message != null ? message : const L10N("default.minlength","Legth of {{field}} is invalid"));
 
 
     bool matches(item, Map matchState) {
@@ -163,4 +178,5 @@ class MinLenght extends Constraint {
 
     Description describe(Description description) => description.add("Length must be at least $minLength");
 
+    String get valueToCheckAgainst => "$minLength";
 }

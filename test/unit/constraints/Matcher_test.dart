@@ -116,11 +116,11 @@ testMatchers() {
         group('> MinLength', () {
 
             test('> Valid', () {
-                expect([ "Hallo", "Test" ], new MinLenght(minLength: 2,message: l10n("no.key","Hier nicht notwendig")));
+                expect([ "Hallo", "Test" ], new MinLenght(2,message: l10n("no.key","Hier nicht notwendig")));
             });
 
             test('> Invalid', () {
-                expect([ "Hallo", "Test" ], isNot(new MinLenght(minLength: 3,message: l10n("no.key","Hier nicht notwendig"))));
+                expect([ "Hallo", "Test" ], isNot(new MinLenght(3,message: l10n("no.key","Hier nicht notwendig"))));
             }); // end of 'Invalid' test
 
 
