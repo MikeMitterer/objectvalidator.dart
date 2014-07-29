@@ -4,11 +4,11 @@ class Name {
 
     Name(this.firstname);
 
-    @NotEmpty(message: const L10N("firstname.notempty", "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
-    @MinLenght(4, message: const L10N("firstname.minlength", "Firstname ({{value}}) must be at least 4 characters long"))
+    @NotEmpty(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
+    @MinLenght(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
     final String firstname;
 
-    @MinLenght(4, message: const L10N("name.minlength", "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    @MinLenght(4, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
     String get name => firstname;
 }
 
@@ -19,7 +19,7 @@ class Name2 extends Name {
 class Name3 extends Name2 {
     Name3(final String name) : super(name);
 
-    @MinLenght(3, message: const L10N("name.minlength", "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    @MinLenght(3, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
     String get name => firstname;
 }
 

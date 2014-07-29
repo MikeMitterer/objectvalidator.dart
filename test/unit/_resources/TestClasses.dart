@@ -6,12 +6,12 @@ part of unit.test;
 
     UserInCity(this._city,this._user);
 
-    @VObject(message: const L10N("getcity","City must be valid"))
+    @VObject(message: const L10N("City must be valid"))
     City getCity() {
         return _city;
     }
 
-    @VObject(message: const L10N("getuser","User must be valid"))
+    @VObject(message: const L10N("User must be valid"))
     User getUser() {
         return _user;
     }
@@ -20,7 +20,7 @@ part of unit.test;
  class AreayCodes {
     final List<String> _codes = new List<String>();
 
-    @NotEmpty(message: const L10N("getcodes","List must not be empty"))
+    @NotEmpty(message: const L10N("List must not be empty"))
     List<String> getCodes() {
         return _codes;
     }
@@ -33,12 +33,12 @@ part of unit.test;
 
     City(this.zip, this.name);
 
-    @NotEmpty(message: const L10N("getzip","ZIP-Code must not be empty"))
+    @NotEmpty(message: const L10N("ZIP-Code must not be empty"))
     String getZip() {
         return zip;
     }
 
-    @NotEmpty(message: const L10N("getname","Cityname must not be empty"))
+    @NotEmpty(message: const L10N("Cityname must not be empty"))
     String getName() {
         return name;
     }
@@ -49,18 +49,18 @@ part of unit.test;
 
     Person(this.age);
 
-    @Range(start: 5,end: 99, message: const L10N("getage", "Age must be between 5 and 99 years"))
+    @Range(start: 5.0,end: 99.0, message: const L10N("Age must be between 5 and 99 years"))
     int getAge() {
         return age;
     }
 }
 
  class User extends Person {
-    @Uuid(message: const L10N("userid", "UserID must be a UUID"))
+    @Uuid(message: const L10N( "UserID must be a UUID"))
     String userID;
 
-    @NotEmpty(message: const L10N("name", "Name must not be empty"))
-    @MinLenght(4, message: const L10N("name", "Name lenght must be at least 4 characters..."))
+    @NotEmpty(message: const L10N( "Name must not be empty"))
+    @MinLenght(4, message: const L10N( "Name lenght must be at least 4 characters..."))
     final String name;
 
     final String eMail;
@@ -73,7 +73,7 @@ part of unit.test;
         return name;
     }
 
-    @EMail(message: const L10N("userid", "{{value}} is not a valid eMail address"))
+    @EMail(message: const L10N( "{{value}} is not a valid eMail address"))
     String getEmail() {
         return eMail;
     }

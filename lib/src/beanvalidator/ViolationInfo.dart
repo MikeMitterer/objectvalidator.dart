@@ -41,7 +41,7 @@ class ViolationInfo<T> implements Translatable {
         l10nVars.putIfAbsent("value.length", () => ViolationInfo._getLength(invalidValue));
         l10nVars.putIfAbsent("value.to.check.against", () => valueToCheckAgainst);
 
-        _l10n = new L10N(l10nFromConstraint.key, l10nFromConstraint.message, l10nVars);
+        _l10n = new L10N(l10nFromConstraint.message, l10nVars);
     }
 
     String get message => l10n.message;

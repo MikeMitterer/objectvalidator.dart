@@ -143,5 +143,6 @@ class BeanValidator<T> {
             return matches;
         }
 
+        return false;
     }
 }
