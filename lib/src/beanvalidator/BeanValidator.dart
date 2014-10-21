@@ -17,7 +17,7 @@ class BeanValidator<T> {
 
     /// useKeyPrefix wird verwendet wenn untergeordnete Klassen (VObject) überprüft werden
     /// damit gleiche Methodenname in untergeordneten Ojekten unterschieden werden können
-    Map<String,ViolationInfo<T>> _validate(final T obj,{ final bool useKeyPrefix: false }) {
+    Map<String,ViolationInfo<T>> _validate(final obj,{ final bool useKeyPrefix: false }) {
         final Map<String,ViolationInfo<T>> violationinfos = new Map<String,ViolationInfo<T>>();
 
         final mirror = reflect(obj);
@@ -39,7 +39,7 @@ class BeanValidator<T> {
     }
 
     /// keyPrefix: Dient als Unterscheidung für die Unterklassen
-    _addViolationInfos(final T obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
+    _addViolationInfos(final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
 
         bool hasSuperClass() {
             return classMirror.superclass != null;
@@ -76,7 +76,7 @@ class BeanValidator<T> {
         }
     }
 
-    _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final T obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
+    _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
         final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
 
         _logger.fine("    Metadata: ${element}");
@@ -107,7 +107,7 @@ class BeanValidator<T> {
 
     }
 
-    bool _isConstraintCheckOK(final Constraint constraint,final String simplename,final InstanceMirror element,final member,final T obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
+    bool _isConstraintCheckOK(final Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
         final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
 
         // Invokes a getter and returns a mirror on the result. The getter

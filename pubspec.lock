@@ -4,11 +4,11 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.15.7"
+    version: "0.9.1"
   args:
     description: args
     source: hosted
-    version: "0.11.0+1"
+    version: "0.12.0+1"
   browser:
     description: browser
     source: hosted
@@ -26,11 +26,13 @@ packages:
   intl:
     description: intl
     source: hosted
-    version: "0.11.3"
+    version: "0.8.10+4"
   l10n:
-    description: l10n
-    source: hosted
-    version: "0.9.20"
+    description:
+      path: "/Volumes/Daten/DevLocal/DevDart/L10N"
+      relative: false
+    source: path
+    version: "0.15.11"
   logging:
     description: logging
     source: hosted
@@ -43,6 +45,10 @@ packages:
     description: matcher
     source: hosted
     version: "0.10.1+1"
+  meta:
+    description: meta
+    source: hosted
+    version: "0.8.8"
   path:
     description: path
     source: hosted
