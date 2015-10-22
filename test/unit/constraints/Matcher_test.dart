@@ -73,6 +73,27 @@ testMatchers() {
         });
         // End of '> Uuid' group
 
+        group('> Password', () {
+            final String password = "12345678aB#";
+            final String invalidPassword = "0123456789abcdefgB0123456789abcdefgB#";
+
+            test('> Valid Password', () {
+                expect(password, new Password(message: l10n("Hier nicht notwendig")));
+                expect(password, isPassword);
+            }); // end of 'Valid UUID' test
+
+            test('> Invalid Password', () {
+                expect("Hallo", isNot(new Password(message: l10n("Hier nicht notwendig"))));
+                expect(null, isNot(isPassword));
+                expect("12345678aB# a", isNot(isPassword));
+                expect("12345678aB# ", isNot(isPassword));
+                expect(invalidPassword, isNot(isPassword));
+            });
+            // end of 'Invalid UUID' test
+
+        });
+        // End of '> Password' group
+
         group('> NotEmptyAndNotNull', () {
 
             test('> NotEmptyAndNotNull', () {

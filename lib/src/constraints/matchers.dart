@@ -101,6 +101,18 @@ class Uuid extends Pattern {
 
 const Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
 
+class Password extends Pattern {
+    static const String _PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%])[0-9a-zA-Z@#\$%]{8,15}\$";
+
+    const Password({final L10N message}) : super(pattern: _PATTERN_PASSWORD, message: message);
+
+    Description describe(Description description) => description.add("Not a valid password");
+
+    String get valueToCheckAgainst => "Password ($_PATTERN_PASSWORD)";
+}
+
+const Matcher isPassword = const Password(message: const L10N("Nur für Annotation!"));
+
 class NotEmptyAndNotNull extends Constraint {
 
     const NotEmptyAndNotNull({final L10N message}) : super(message);

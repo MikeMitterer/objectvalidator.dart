@@ -1,28 +1,5 @@
 part of unit.test;
 
-class Name {
-
-    Name(this.firstname);
-
-    @NotEmptyAndNotNull(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
-    @MinLenght(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
-    final String firstname;
-
-    @MinLenght(4, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
-    String get name => firstname;
-}
-
-class Name2 extends Name {
-    Name2(final String name) : super(name);
-}
-
-class Name3 extends Name2 {
-    Name3(final String name) : super(name);
-
-    @MinLenght(3, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
-    String get name => firstname;
-}
-
 testBeanValidator() {
     final Logger _logger = new Logger("unit.test.BeanValidator");
 
@@ -219,6 +196,20 @@ testBeanValidator() {
 
         }); // end of 'UUID' test
 
+        test('> Password', () {
+            final UsernamePassword userpassword = new UsernamePassword("joe@test.com", "12345678aA%");
+            final UsernamePassword invalidUP = new UsernamePassword("joe@test.com", "12345678aA");
+
+            final BeanValidator<UsernamePassword> beanValidator = new BeanValidator<UsernamePassword>();
+            final List<ViolationInfo> violationinfos = beanValidator.validate(userpassword);
+
+            expect(violationinfos.length,0);
+
+            final List<ViolationInfo> violationinfos2 = beanValidator.validate(invalidUP);
+            expect(violationinfos2.length,1);
+            expect(violationinfos2[0].message,"12345678aA is not a valid password");
+
+        }); // end of 'UUID' test
     });
     // end 'BeanValidator' group
 

@@ -89,3 +89,37 @@ part of unit.test;
 //            return super.getAge();
 //        }
 }
+
+class Name {
+
+    Name(this.firstname);
+
+    @NotEmptyAndNotNull(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
+    @MinLenght(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
+    final String firstname;
+
+    @MinLenght(4, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    String get name => firstname;
+}
+
+class Name2 extends Name {
+    Name2(final String name) : super(name);
+}
+
+class Name3 extends Name2 {
+    Name3(final String name) : super(name);
+
+    @MinLenght(3, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    String get name => firstname;
+}
+
+class UsernamePassword {
+
+    @EMail(message: const L10N( "{{value}} is not a valid eMail address"))
+    final String username;
+
+    @Password(message: const L10N( "{{value}} is not a valid password"))
+    final String password;
+
+    UsernamePassword(this.username, this.password);
+}
