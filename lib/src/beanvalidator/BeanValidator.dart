@@ -1,14 +1,12 @@
 part of beanvalidator;
 
 class BeanValidator<T> {
-
-
     final _logger = new Logger('beanvalidator.BeanValidator');
 
     BeanValidator() {
     }
 
-    List<ViolationInfo<T>> validate(final T obj) {
+    List<ViolationInfo> validate(final T obj) {
         Validate.notNull(obj);
         return _validate(obj).values.toList();
     }
@@ -17,8 +15,8 @@ class BeanValidator<T> {
 
     /// useKeyPrefix wird verwendet wenn untergeordnete Klassen (VObject) überprüft werden
     /// damit gleiche Methodenname in untergeordneten Ojekten unterschieden werden können
-    Map<String,ViolationInfo<T>> _validate(final obj,{ final bool useKeyPrefix: false }) {
-        final Map<String,ViolationInfo<T>> violationinfos = new Map<String,ViolationInfo<T>>();
+    Map<String,ViolationInfo> _validate(final obj,{ final bool useKeyPrefix: false }) {
+        final Map<String,ViolationInfo> violationinfos = new Map<String,ViolationInfo>();
 
         final mirror = reflect(obj);
         final ClassMirror classMirror = mirror.type;
@@ -39,7 +37,7 @@ class BeanValidator<T> {
     }
 
     /// keyPrefix: Dient als Unterscheidung für die Unterklassen
-    _addViolationInfos(final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
+    _addViolationInfos(final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
 
         bool hasSuperClass() {
             return classMirror.superclass != null;
@@ -76,7 +74,7 @@ class BeanValidator<T> {
         }
     }
 
-    _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
+    _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
         final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
 
         _logger.fine("    Metadata: ${element}");
@@ -87,7 +85,7 @@ class BeanValidator<T> {
 
             if(_isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix)) {
 
-                final Map<String,ViolationInfo<T>> test = _validate(isRegularMethod ? value() : value,useKeyPrefix: true);
+                final Map<String,ViolationInfo> test = _validate(isRegularMethod ? value() : value,useKeyPrefix: true);
 
                 violationinfos.addAll(test);
                 _logger.fine("           SubVioloationMap for ${member.simpleName} added");
@@ -107,19 +105,23 @@ class BeanValidator<T> {
 
     }
 
-    bool _isConstraintCheckOK(final Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo<T>> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
+    bool _isConstraintCheckOK(final Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
         final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
 
         // Invokes a getter and returns a mirror on the result. The getter
         // can be the implicit getter for a field or a user-defined getter
         // method.
         if(mirror != null && mirror is InstanceMirror) {
-            final value = mirror.getField(member.simpleName).reflectee;
+            final field = mirror.getField(member.simpleName);
+            final reflectee = field.reflectee;
+            final value = isRegularMethod ? reflectee() : reflectee;
 
+            _logger.fine("               SimpleName: ${member.simpleName}");
+            _logger.fine("               Field-Type: ${field.runtimeType}");
             _logger.fine("               Value: ${value}");
 
             // Wenn Value eine Funktion ist dann wird die Funktion selbst aufgerufen
-            final bool matches = constraint.matches(isRegularMethod ? value() : value, { } );
+            final bool matches = constraint.matches(value, { } );
 
             final L10N l10n = constraint.l10n;
             final String valueToCheckAgainst = constraint.valueToCheckAgainst;
@@ -131,7 +133,7 @@ class BeanValidator<T> {
             _logger.fine("                   ViolationKey: $violationKey");
 
             if(!matches) {
-                final ViolationInfo<T> violationinfo = new ViolationInfo<T>(simplename,l10n,value,valueToCheckAgainst,obj);
+                final ViolationInfo violationinfo = new ViolationInfo(simplename,l10n,value,valueToCheckAgainst,obj);
                 violationinfos[violationKey] = violationinfo;
                 _logger.fine("                   Key '$violationKey' added...");
 

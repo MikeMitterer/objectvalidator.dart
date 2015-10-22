@@ -4,7 +4,7 @@ class Name {
 
     Name(this.firstname);
 
-    @NotEmpty(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
+    @NotEmptyAndNotNull(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
     @MinLenght(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
     final String firstname;
 
@@ -170,10 +170,17 @@ testBeanValidator() {
         }); // end of 'City' test
 
         test('> User in City', () {
-            final UserInCity userInCity = new UserInCity(new City("6363", "Westendorf"), new User("Joe", "office@mikemitterer.at"));
+            final UserInCity userInCity = new UserInCity(
+                new City("6363", "Westendorf"),
+                new User("Joe", "office@mikemitterer.at")
+            );
+
             final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
             final List<ViolationInfo<UserInCity>> violationinfos = beanValidator.validate(userInCity);
 
+            violationinfos.forEach((final ViolationInfo info) {
+               _logger.info("${info.rootBean.runtimeType} -> ${info.message}");
+            });
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"Name lenght must be at least 4 characters...");
 

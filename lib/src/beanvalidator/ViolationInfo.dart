@@ -10,7 +10,7 @@ part of beanvalidator;
  *
  * {{value.to.check.against}} wird durch den Wert ersetzt der nicht erreicht wurde
  */
-class ViolationInfo<T> implements Translatable {
+class ViolationInfo implements Translatable {
     final _logger = new Logger('beanvalidator.ViolationInfo');
 
     /// Feldname oder Funktionsname
@@ -20,7 +20,7 @@ class ViolationInfo<T> implements Translatable {
     final Object invalidValue;
 
     /// Parent-Object
-    final T rootBean;
+    final rootBean;
 
     /// Constraint L10N Info
     L10N _l10n;
@@ -36,6 +36,7 @@ class ViolationInfo<T> implements Translatable {
         Validate.notNull(valueToCheckAgainst, "valueToCheckAgainst must not be null");
 
         final Map<String, dynamic> l10nVars = new Map<String, dynamic>.from(l10nFromConstraint.vars);
+
         l10nVars.putIfAbsent("field", () => ViolationInfo._getMethodName(methodName));
         l10nVars.putIfAbsent("value", () => ViolationInfo._getValue(invalidValue));
         l10nVars.putIfAbsent("value.length", () => ViolationInfo._getLength(invalidValue));

@@ -73,22 +73,22 @@ testMatchers() {
         });
         // End of '> Uuid' group
 
-        group('> NotEmpty', () {
+        group('> NotEmptyAndNotNull', () {
 
-            test('> NotEmpty', () {
-                expect("Hallo", new NotEmpty(message: l10n("Hier nicht notwendig")));
-                expect("Hallo", isNotEmpty);
+            test('> NotEmptyAndNotNull', () {
+                expect("Hallo", new NotEmptyAndNotNull(message: l10n("Hier nicht notwendig")));
+                expect("Hallo", isNotEmptyAndNotNull);
             }); // end of 'NotEmpty' test
 
-            test('> NotEmptyWithList', () {
-                expect(new List<String>()..add("Test"), new NotEmpty(message: l10n("Hier nicht notwendig")));
+            test('> NotEmptyAndNotNullWithList', () {
+                expect(new List<String>()..add("Test"), new NotEmptyAndNotNull(message: l10n("Hier nicht notwendig")));
             }); // end of 'NotEmptyWithList' test
 
             test('> Empty', () {
-                expect(10, isNot(new NotEmpty(message: l10n("Hier nicht notwendig"))));
-                expect("", isNot(new NotEmpty(message: l10n("Hier nicht notwendig"))));
-                expect(null, isNot(isNotEmpty));
-                expect(new List<String>(), isNot(new NotEmpty(message: l10n("Hier nicht notwendig"))));
+                expect(10, isNot(new NotEmptyAndNotNull(message: l10n("Hier nicht notwendig"))));
+                expect("", isNot(new NotEmptyAndNotNull(message: l10n("Hier nicht notwendig"))));
+                expect(null, isNot(isNotEmptyAndNotNull));
+                expect(new List<String>(), isNot(new NotEmptyAndNotNull(message: l10n("Hier nicht notwendig"))));
             }); // end of 'Empty' test
 
         });

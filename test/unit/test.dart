@@ -1,58 +1,37 @@
+// ----------------------------------------------------------------------------
+// Start der Tests mit:
+//      pub run test -p content-shell test/unit/test.dart
+//
+
+@TestOn("content-shell")
+
 library unit.test;
 
-//import 'dart:html';
-//import 'dart:mirrors';
-//import 'dart:convert';
-
-import 'package:logging/logging.dart';
-//import 'package:logging_handlers/logging_handlers_shared.dart';
-
-import 'package:unittest/unittest.dart';
-import 'package:unittest/html_enhanced_config.dart';
+import 'package:test/test.dart';
 
 //---------------------------------------------------------
 // Extra packages (piepag) (http_utils, validate, signer)
 //---------------------------------------------------------
 import 'package:l10n/l10n.dart';
 
-import 'package:beanvalidator/constraints.dart';
-import 'package:beanvalidator/beanvalidator.dart';
+//-----------------------------------------------------------------------------
+// Logging
 
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:console_log_handler/console_log_handler.dart';
-
-//---------------------------------------------------------
-// WebApp-Basis (piwab) - webapp_base_dart
-//---------------------------------------------------------
-
-//---------------------------------------------------------
-// UI-Basis (pibui) - webapp_base_ui
-//---------------------------------------------------------
-
-// __ interfaces
-// __ tools
-//   __ conroller
-//   __ decorators
-//   __ services
-//   __ component
-
-//---------------------------------------------------------
-// MobiAd UI (pimui) - mobiad_rest_ui
-//---------------------------------------------------------
-
-// __ interfaces
-// __ tools
-//   __ conroller
-//   __ decorators
-//   __ services
-//   __ component
 
 //---------------------------------------------------------
 // Testimports (nur bei Unit-Tests)
 //
+
+import 'package:beanvalidator/beanvalidator.dart';
+
 part '_resources/TestClasses.dart';
 
 part 'constraints/Matcher_test.dart';
 part 'constraints/Constraints_test.dart';
+
 part 'beanvalidator/BeanValidator_test.dart';
 
 //-----------------------------------------------------------------------------
@@ -63,9 +42,7 @@ part 'beanvalidator/BeanValidator_test.dart';
 void main() {
     final Logger logger = new Logger("test");
 
-    useHtmlEnhancedConfiguration();
     configLogging();
-    //startQuickLogging();
 
     testMatchers();
     testConstraints();
@@ -80,5 +57,5 @@ void configLogging() {
     // now control the logging.
     // Turn off all logging first
     Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogConsoleHandler());
+    Logger.root.onRecord.listen(new LogPrintHandler());
 }

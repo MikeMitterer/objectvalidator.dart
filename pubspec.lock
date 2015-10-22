@@ -146,15 +146,11 @@ packages:
   test:
     description: test
     source: hosted
-    version: "0.12.4+9"
+    version: "0.12.5+1"
   typed_data:
     description: typed_data
     source: hosted
     version: "1.0.0"
-  unittest:
-    description: unittest
-    source: hosted
-    version: "0.12.4"
   utf:
     description: utf
     source: hosted

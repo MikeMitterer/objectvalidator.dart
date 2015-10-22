@@ -20,7 +20,7 @@ part of unit.test;
  class AreayCodes {
     final List<String> _codes = new List<String>();
 
-    @NotEmpty(message: const L10N("List must not be empty"))
+    @NotEmptyAndNotNull(message: const L10N("List must not be empty"))
     List<String> getCodes() {
         return _codes;
     }
@@ -33,12 +33,12 @@ part of unit.test;
 
     City(this.zip, this.name);
 
-    @NotEmpty(message: const L10N("ZIP-Code must not be empty"))
+    @NotEmptyAndNotNull(message: const L10N("ZIP-Code must not be empty"))
     String getZip() {
         return zip;
     }
 
-    @NotEmpty(message: const L10N("Cityname must not be empty"))
+    @NotEmptyAndNotNull(message: const L10N("Cityname must not be empty"))
     String getName() {
         return name;
     }
@@ -59,7 +59,7 @@ part of unit.test;
     @Uuid(message: const L10N( "UserID must be a UUID"))
     String userID;
 
-    @NotEmpty(message: const L10N( "Name must not be empty"))
+    @NotEmptyAndNotNull(message: const L10N( "Name must not be empty"))
     @MinLenght(4, message: const L10N( "Name lenght must be at least 4 characters..."))
     final String name;
 

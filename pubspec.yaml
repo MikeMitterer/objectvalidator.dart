@@ -21,4 +21,4 @@ dependencies:
 
 dev_dependencies:
 
-  unittest: any
+  test: any

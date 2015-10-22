@@ -101,9 +101,9 @@ class Uuid extends Pattern {
 
 const Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
 
-class NotEmpty extends Constraint {
+class NotEmptyAndNotNull extends Constraint {
 
-    const NotEmpty({final L10N message}) : super(message);
+    const NotEmptyAndNotNull({final L10N message}) : super(message);
 
     bool matches(item, Map matchState) {
         if (item == null) {
@@ -113,8 +113,7 @@ class NotEmpty extends Constraint {
         try {
             return item.isNotEmpty;
         }
-        on NoSuchMethodError
-        catch(error) {
+        on NoSuchMethodError {
             return false;
         }
     }
@@ -124,7 +123,7 @@ class NotEmpty extends Constraint {
     String get valueToCheckAgainst => "not empty";
 }
 
-const Matcher isNotEmpty = const NotEmpty(message: const L10N("Nur für Annontation"));
+const Matcher isNotEmptyAndNotNull = const NotEmptyAndNotNull(message: const L10N("Nur für Annontation"));
 
 /// Dient nur als "Marker" für eine "Unter-Validation-Object" - darf prinzipiell nicht null sein
 class VObject extends Constraint {
