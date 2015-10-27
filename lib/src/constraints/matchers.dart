@@ -103,7 +103,7 @@ class Uuid extends Pattern {
 const m.Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
 
 class Password extends Pattern {
-    static const String _PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%])[0-9a-zA-Z@#\$%]{8,15}\$";
+    static const String _PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%?])[0-9a-zA-Z@#\$%?]{8,15}\$";
 
     const Password({final L10N message}) : super(pattern: _PATTERN_PASSWORD, message: message);
 

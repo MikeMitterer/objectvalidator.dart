@@ -80,6 +80,7 @@ testMatchers() {
             test('> Valid Password', () {
                 expect(password, new Password(message: l10n("Hier nicht notwendig")));
                 expect(password, isPassword);
+                expect("12345678aB?", isPassword);
             }); // end of 'Valid UUID' test
 
             test('> Invalid Password', () {
@@ -87,6 +88,7 @@ testMatchers() {
                 expect(null, isNot(isPassword));
                 expect("12345678aB# a", isNot(isPassword));
                 expect("12345678aB# ", isNot(isPassword));
+                expect("12345678aB;", isNot(isPassword));
                 expect(invalidPassword, isNot(isPassword));
             });
             // end of 'Invalid UUID' test
