@@ -29,7 +29,7 @@ class ViolationInfo implements Translatable {
 
     static final RegExp _regexpMethod = new RegExp("(%method%|%field%)");
 
-    ViolationInfo(this.methodName, final L10N l10nFromConstraint, this.invalidValue, this.valueToCheckAgainst, this.rootBean) {
+    ViolationInfo(this.methodName, final L10NImpl l10nFromConstraint, this.invalidValue, this.valueToCheckAgainst, this.rootBean) {
         Validate.notBlank(methodName, "Method-Name must not be blank");
         Validate.notNull(l10nFromConstraint, "l10n must not be null");
         Validate.notNull(rootBean, "Root-Bean must not be null");
@@ -42,7 +42,7 @@ class ViolationInfo implements Translatable {
         l10nVars.putIfAbsent("value.length", () => ViolationInfo._getLength(invalidValue));
         l10nVars.putIfAbsent("value.to.check.against", () => valueToCheckAgainst);
 
-        _l10n = new L10N(l10nFromConstraint.message, l10nVars);
+        _l10n = new L10NImpl(l10nFromConstraint.message, l10nVars);
     }
 
     String get message => l10n.message;

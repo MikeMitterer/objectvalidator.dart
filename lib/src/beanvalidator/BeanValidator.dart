@@ -122,9 +122,8 @@ class BeanValidator<T> {
 
             // Wenn Value eine Funktion ist dann wird die Funktion selbst aufgerufen
             final bool matches = constraint.matches(value, { } );
-
-            final L10N l10n = constraint.l10n;
             final String valueToCheckAgainst = constraint.valueToCheckAgainst;
+            final L10N l10n = constraint.l10n;
 
             final String violationKey = "$keyPrefix/$simplename/${MirrorSystem.getName(element.type.simpleName)}";
 

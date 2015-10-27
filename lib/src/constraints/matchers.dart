@@ -6,6 +6,8 @@ abstract class Constraint extends m.Matcher implements Translatable {
     /// Translatable message
     final L10N message;
 
+    final String sample = "not set";
+
     const Constraint(this.message);
 
     L10N get l10n => message;
@@ -76,9 +78,8 @@ class Pattern extends Constraint {
 }
 
 class EMail extends Pattern {
+    /// ,9: TLD .localhost hat 9 Stellen
     static const String _PATTERN_EMAIL = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})\$";
-
-    // ,9: TLD .localhost hat 9 Stellen
 
     const EMail({final L10N message}) : super(pattern: _PATTERN_EMAIL, message: message);
 
