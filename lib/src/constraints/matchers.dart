@@ -1,8 +1,8 @@
 part of beanvalidator.constraints;
 
-Matcher isBetweenMinus180AndPlus180() => allOf(greaterThanOrEqualTo(-180.0), lessThanOrEqualTo(180));
+m.Matcher isBetweenMinus180AndPlus180() => m.allOf(m.greaterThanOrEqualTo(-180.0), m.lessThanOrEqualTo(180));
 
-abstract class Constraint extends Matcher implements Translatable {
+abstract class Constraint extends m.Matcher implements Translatable {
     /// Translatable message
     final L10N message;
 
@@ -29,14 +29,14 @@ class Range extends Constraint {
         return (checkTyped(item));
     }
 
-    Description describe(Description description) => description.add("Range to be between $start and $end");
+    m.Description describe(m.Description description) => description.add("Range to be between $start and $end");
 
     String get valueToCheckAgainst => "$start / $end";
 }
 
 /// Nur zum testen in den Unit-Tests
 /// Sample: expect(20.0, isInRangeBetween10And40);
-const Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, message: const L10N("Test") );
+const m.Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, message: const L10N("Test") );
 
 /// Sample für Unit-Tests:
 ///     expect(-50.1,isNot(isInRange(-50.0,50.0)));
@@ -49,7 +49,7 @@ class NotNull extends Constraint {
         return item != null;
     }
 
-    Description describe(Description description) => description.add("Value must not be null!");
+    m.Description describe(m.Description description) => description.add("Value must not be null!");
 
     String get valueToCheckAgainst => "null";
 }
@@ -70,7 +70,7 @@ class Pattern extends Constraint {
         return false;
     }
 
-    Description describe(Description description) => description.add("$pattern not found");
+    m.Description describe(m.Description description) => description.add("$pattern not found");
 
     String get valueToCheckAgainst => pattern;
 }
@@ -82,36 +82,36 @@ class EMail extends Pattern {
 
     const EMail({final L10N message}) : super(pattern: _PATTERN_EMAIL, message: message);
 
-    Description describe(Description description) => description.add("Not a valid email address");
+    m.Description describe(m.Description description) => description.add("Not a valid email address");
 
     String get valueToCheckAgainst => "email ($_PATTERN_EMAIL)";
 }
 
-const Matcher isEMail = const EMail(message: const L10N("Nur für Annotation!"));
+const m.Matcher isEMail = const EMail(message: const L10N("Nur für Annotation!"));
 
 class Uuid extends Pattern {
     static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
 
     const Uuid({final L10N message}) : super(pattern: _PATTERN_UUID, message: message);
 
-    Description describe(Description description) => description.add("Not a valid v4 UUID");
+    m.Description describe(m.Description description) => description.add("Not a valid v4 UUID");
 
     String get valueToCheckAgainst => "UUID ($_PATTERN_UUID)";
 }
 
-const Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
+const m.Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
 
 class Password extends Pattern {
     static const String _PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%])[0-9a-zA-Z@#\$%]{8,15}\$";
 
     const Password({final L10N message}) : super(pattern: _PATTERN_PASSWORD, message: message);
 
-    Description describe(Description description) => description.add("Not a valid password");
+    m.Description describe(m.Description description) => description.add("Not a valid password");
 
     String get valueToCheckAgainst => "Password ($_PATTERN_PASSWORD)";
 }
 
-const Matcher isPassword = const Password(message: const L10N("Nur für Annotation!"));
+const m.Matcher isPassword = const Password(message: const L10N("Nur für Annotation!"));
 
 class NotEmptyAndNotNull extends Constraint {
 
@@ -130,12 +130,12 @@ class NotEmptyAndNotNull extends Constraint {
         }
     }
 
-    Description describe(Description description) => description.add("Must not be empty");
+    m.Description describe(m.Description description) => description.add("Must not be empty");
 
     String get valueToCheckAgainst => "not empty";
 }
 
-const Matcher isNotEmptyAndNotNull = const NotEmptyAndNotNull(message: const L10N("Nur für Annontation"));
+const m.Matcher isNotEmptyAndNotNull = const NotEmptyAndNotNull(message: const L10N("Nur für Annontation"));
 
 /// Dient nur als "Marker" für eine "Unter-Validation-Object" - darf prinzipiell nicht null sein
 class VObject extends Constraint {
@@ -151,18 +151,18 @@ class VObject extends Constraint {
         */
     }
 
-    Description describe(Description description) => description.add("Must not be null");
+    m.Description describe(m.Description description) => description.add("Must not be null");
 
     String get valueToCheckAgainst => "not empty";
 }
 
-const Matcher isVObjectValid = const VObject(message: const L10N("Nur für Annotation"));
+const m.Matcher isVObjectValid = const VObject(message: const L10N("Nur für Annotation"));
 
 
-class MinLenght extends Constraint {
+class MinLength extends Constraint {
     final int minLength;
 
-    const MinLenght( this.minLength ,{ final L10N message } ) :
+    const MinLength( this.minLength ,{ final L10N message } ) :
         super(message != null ? message : const L10N("Legth of {{field}} is invalid"));
 
 
@@ -187,7 +187,7 @@ class MinLenght extends Constraint {
 
     }
 
-    Description describe(Description description) => description.add("Length must be at least $minLength");
+    m.Description describe(m.Description description) => description.add("Length must be at least $minLength");
 
     String get valueToCheckAgainst => "$minLength";
 }

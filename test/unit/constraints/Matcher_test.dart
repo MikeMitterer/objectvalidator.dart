@@ -137,11 +137,11 @@ testMatchers() {
         group('> MinLength', () {
 
             test('> Valid', () {
-                expect([ "Hallo", "Test" ], new MinLenght(2,message: l10n("Hier nicht notwendig")));
+                expect([ "Hallo", "Test" ], new MinLength(2,message: l10n("Hier nicht notwendig")));
             });
 
             test('> Invalid', () {
-                expect([ "Hallo", "Test" ], isNot(new MinLenght(3,message: l10n("Hier nicht notwendig"))));
+                expect([ "Hallo", "Test" ], isNot(new MinLength(3,message: l10n("Hier nicht notwendig"))));
             }); // end of 'Invalid' test
 
 

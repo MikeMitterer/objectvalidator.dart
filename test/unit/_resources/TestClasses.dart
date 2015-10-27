@@ -60,7 +60,7 @@ part of unit.test;
     String userID;
 
     @NotEmptyAndNotNull(message: const L10N( "Name must not be empty"))
-    @MinLenght(4, message: const L10N( "Name lenght must be at least 4 characters..."))
+    @MinLength(4, message: const L10N( "Name lenght must be at least 4 characters..."))
     final String name;
 
     final String eMail;
@@ -95,10 +95,10 @@ class Name {
     Name(this.firstname);
 
     @NotEmptyAndNotNull(message: const L10N( "Firstname must not be {{what}}", const { "what" : "EMPTY" }))
-    @MinLenght(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
+    @MinLength(4, message: const L10N( "Firstname ({{value}}) must be at least 4 characters long"))
     final String firstname;
 
-    @MinLenght(4, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    @MinLength(4, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
     String get name => firstname;
 }
 
@@ -109,7 +109,7 @@ class Name2 extends Name {
 class Name3 extends Name2 {
     Name3(final String name) : super(name);
 
-    @MinLenght(3, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
+    @MinLength(3, message: const L10N( "{{field}} must be at least {{value.to.check.against}} chars long but was only {{value.length}} characters long"))
     String get name => firstname;
 }
 

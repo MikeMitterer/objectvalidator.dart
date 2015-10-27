@@ -19,7 +19,6 @@ import 'package:l10n/l10n.dart';
 
 import 'package:logging/logging.dart';
 import 'package:logging_handlers/logging_handlers_shared.dart';
-import 'package:console_log_handler/console_log_handler.dart';
 
 //---------------------------------------------------------
 // Testimports (nur bei Unit-Tests)

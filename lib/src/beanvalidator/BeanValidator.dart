@@ -79,8 +79,8 @@ class BeanValidator<T> {
 
         _logger.fine("    Metadata: ${element}");
 
-        if(element.hasReflectee && element.reflectee is VObject) {
-            final Constraint constraint = element.reflectee as Constraint;
+        if(element.hasReflectee && element.reflectee is bv.VObject) {
+            final bv.Constraint constraint = element.reflectee as bv.Constraint;
             final value = mirror.getField(member.simpleName).reflectee;
 
             if(_isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix)) {
@@ -95,17 +95,17 @@ class BeanValidator<T> {
             // ParentKlasse (Jede Konkrete ConstraintsKlasse hat Constraint als Parent (super-Klasse))
             final instanceParent = element.reflectee;
             _logger.fine("           Parent: ${instanceParent}");
-            _logger.fine("               isConstraint: ${instanceParent is Constraint ? 'yes' : 'no'}");
+            _logger.fine("               isConstraint: ${instanceParent is bv.Constraint ? 'yes' : 'no'}");
 
-            if (instanceParent is Constraint) {
-                final Constraint constraint = instanceParent as Constraint;
+            if (instanceParent is bv.Constraint) {
+                final bv.Constraint constraint = instanceParent as bv.Constraint;
                 _isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix);
             }
         }
 
     }
 
-    bool _isConstraintCheckOK(final Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
+    bool _isConstraintCheckOK(final bv.Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
         final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
 
         // Invokes a getter and returns a mirror on the result. The getter

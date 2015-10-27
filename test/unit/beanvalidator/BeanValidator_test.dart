@@ -17,7 +17,7 @@ testBeanValidator() {
             final Name name = new Name("Mike");
 
             final BeanValidator<Name> bv = new BeanValidator<Name>();
-            List<ViolationInfo<Name>> violationInfos = bv.validate(name);
+            List<ViolationInfo> violationInfos = bv.validate(name);
 
             expect(violationInfos.length, 0);
 
@@ -42,7 +42,7 @@ testBeanValidator() {
            final Name2 name = new Name2("Mike");
 
            final BeanValidator<Name2> bv = new BeanValidator<Name2>();
-           List<ViolationInfo<Name2>> violationInfos = bv.validate(name);
+           List<ViolationInfo> violationInfos = bv.validate(name);
 
            expect(violationInfos.length, 0);
 
@@ -67,7 +67,7 @@ testBeanValidator() {
             final Name3 name = new Name3("Mike");
 
             final BeanValidator<Name3> bv = new BeanValidator<Name3>();
-            List<ViolationInfo<Name3>> violationInfos = bv.validate(name);
+            List<ViolationInfo> violationInfos = bv.validate(name);
 
             expect(violationInfos.length, 0);
 
@@ -91,7 +91,7 @@ testBeanValidator() {
             final Name3 invalidName = new Name3("");
 
             final BeanValidator<Name3> bv = new BeanValidator<Name3>();
-            List<ViolationInfo<Name3>> violationInfos = bv.validate(invalidName);
+            List<ViolationInfo> violationInfos = bv.validate(invalidName);
 
             violationInfos = bv.validate(invalidName);
 
@@ -112,7 +112,7 @@ testBeanValidator() {
             final AreayCodes areacodes = new AreayCodes();
             final BeanValidator<AreayCodes> beanvalidator = new BeanValidator<AreayCodes>();
 
-            List<ViolationInfo<AreayCodes>> violationinfos = beanvalidator.validate(areacodes);
+            List<ViolationInfo> violationinfos = beanvalidator.validate(areacodes);
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"List must not be empty");
         }); // end of 'Empty List' test
@@ -121,7 +121,7 @@ testBeanValidator() {
             final User user = new User("Joe", "joe@test.com");
 
             final BeanValidator<User> beanValidator = new BeanValidator<User>();
-            final List<ViolationInfo<User>> violationinfos = beanValidator.validate(user);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"Name lenght must be at least 4 characters...");
@@ -131,7 +131,7 @@ testBeanValidator() {
             final User user = new User.withAge(3,"Mike", "joe@test.com");
 
             final BeanValidator<User> beanValidator = new BeanValidator<User>();
-            final List<ViolationInfo<User>> violationinfos = beanValidator.validate(user);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"Age must be between 5 and 99 years");
@@ -141,7 +141,7 @@ testBeanValidator() {
         test('> City', () {
             final City city = new City("",null);
             final BeanValidator<City> beanValidator = new BeanValidator<City>();
-            final List<ViolationInfo<City>> violationinfos = beanValidator.validate(city);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(city);
 
             expect(violationinfos.length,2);
         }); // end of 'City' test
@@ -153,7 +153,7 @@ testBeanValidator() {
             );
 
             final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
-            final List<ViolationInfo<UserInCity>> violationinfos = beanValidator.validate(userInCity);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             violationinfos.forEach((final ViolationInfo info) {
                _logger.info("${info.rootBean.runtimeType} -> ${info.message}");
@@ -168,7 +168,7 @@ testBeanValidator() {
             final UserInCity userInCity = new UserInCity(null, new User("Mike", "office@mikemitterer.at"));
 
             final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
-            final List<ViolationInfo<UserInCity>> violationinfos = beanValidator.validate(userInCity);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"City must be valid");
@@ -178,7 +178,7 @@ testBeanValidator() {
             final UserInCity userInCity = new UserInCity(null, new User("Joe", "office@mikemitterer.at"));
 
             final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
-            final List<ViolationInfo<UserInCity>> violationinfos = beanValidator.validate(userInCity);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             expect(violationinfos.length,2);
             expect(violationinfos[0].message,"City must be valid");
@@ -189,7 +189,7 @@ testBeanValidator() {
             final User user = new User.withUUID("Mike", "joe@test.com","123");
 
             final BeanValidator<User> beanValidator = new BeanValidator<User>();
-            final List<ViolationInfo<User>> violationinfos = beanValidator.validate(user);
+            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"UserID must be a UUID");
