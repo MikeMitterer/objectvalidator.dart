@@ -1,4 +1,7 @@
-part of unit.test;
+library unit.test.resources;
+
+import 'package:beanvalidator/beanvalidator.dart';
+import 'package:l10n/l10n.dart';
 
  class UserInCity {
     final City _city;

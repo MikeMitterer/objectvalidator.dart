@@ -1,11 +1,13 @@
-part of unit.test;
+import 'package:test/test.dart';
 
-/**
- *
- */
+import 'package:l10n/l10n.dart';
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
+import 'package:beanvalidator/beanvalidator.dart';
 
-testMatchers() {
-    final Logger logger = new Logger("test.Matchers");
+main() {
+    // final Logger _logger = new Logger("test.Matchers");
+    configLogging();
 
     group('Matchers', () {
 
@@ -56,7 +58,6 @@ testMatchers() {
         // End of '> eMail' group
 
         group('> Uuid', () {
-            final String v3UUID = "c87ee674-4ddc-3efe-a74e-dfe25da5d7b3";
             final String v4UUID = "eab27287-508f-42f1-9d69-f2d911a5154c";
 
             test('> Valid UUID', () {
@@ -154,7 +155,9 @@ testMatchers() {
 
 
 }
+void configLogging() {
+    hierarchicalLoggingEnabled = true;
 
-//------------------------------------------------------------------------------------------------
-// Helper
-//------------------------------------------------------------------------------------------------
+    Logger.root.level = Level.INFO;
+    Logger.root.onRecord.listen(new LogPrintHandler());
+}

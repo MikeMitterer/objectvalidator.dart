@@ -20,5 +20,5 @@ dependencies:
     path: /Volumes/Daten/DevLocal/DevDart/L10N4Dart
 
 dev_dependencies:
-
+  grinder: any
   test: any

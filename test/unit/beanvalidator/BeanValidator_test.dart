@@ -1,13 +1,20 @@
-part of unit.test;
+import 'package:test/test.dart';
 
-testBeanValidator() {
+import 'package:logging/logging.dart';
+import 'package:logging_handlers/logging_handlers_shared.dart';
+
+import 'package:beanvalidator/beanvalidator.dart';
+import '../_resources/TestClasses.dart';
+
+main() {
     final Logger _logger = new Logger("unit.test.BeanValidator");
+    configLogging();
 
-    void _debugViolationInfo(final List<ViolationInfo> violationinfos) {
-        violationinfos.forEach((final ViolationInfo info) {
-            _logger.shout(info.message);
-        });
-    }
+    // void _debugViolationInfo(final List<ViolationInfo> violationinfos) {
+    //     violationinfos.forEach((final ViolationInfo info) {
+    //         _logger.shout(info.message);
+    //     });
+    // }
 
     group('BeanValidator', () {
         setUp(() {
@@ -216,7 +223,9 @@ testBeanValidator() {
 
 }
 
-//------------------------------------------------------------------------------------------------
-// Helper
-//------------------------------------------------------------------------------------------------
+void configLogging() {
+    hierarchicalLoggingEnabled = true;
 
+    Logger.root.level = Level.INFO;
+    Logger.root.onRecord.listen(new LogPrintHandler());
+}

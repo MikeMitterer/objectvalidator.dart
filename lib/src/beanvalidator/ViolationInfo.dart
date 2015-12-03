@@ -27,7 +27,7 @@ class ViolationInfo implements Translatable {
 
     final String valueToCheckAgainst;
 
-    static final RegExp _regexpMethod = new RegExp("(%method%|%field%)");
+    // static final RegExp _regexpMethod = new RegExp("(%method%|%field%)");
 
     ViolationInfo(this.methodName, final L10NImpl l10nFromConstraint, this.invalidValue, this.valueToCheckAgainst, this.rootBean) {
         Validate.notBlank(methodName, "Method-Name must not be blank");
@@ -68,15 +68,15 @@ class ViolationInfo implements Translatable {
         if (invalidValue != null) {
 
             if (invalidValue is String) {
-                return (invalidValue as String).length;
+                return invalidValue.length;
 
             }
             else if (invalidValue is Map) {
-                return (invalidValue as Map).length;
+                return invalidValue.length;
 
             }
             else if (invalidValue is Iterable) {
-                    return (invalidValue as Iterable).length;
+                    return invalidValue.length;
 
                 }
         }
