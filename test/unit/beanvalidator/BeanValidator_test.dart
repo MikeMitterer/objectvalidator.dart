@@ -220,6 +220,20 @@ main() {
     });
     // end 'BeanValidator' group
 
+    group('Exception', () {
+        test('> ViolationException', () {
+
+            final Name name = new Name("Mike");
+            final BeanValidator<Name> bv = new BeanValidator<Name>();
+
+            expect(() => bv.verify(name),isNot(throwsException));
+
+            final Name invalidName = new Name("");
+            expect(() => bv.verify(invalidName),throwsException);
+
+        }); // end of 'ViolationException' test
+
+    }); // End of 'Exception' group
 
 }
 

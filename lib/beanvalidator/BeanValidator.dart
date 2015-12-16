@@ -1,14 +1,31 @@
 part of beanvalidator;
 
+/// Überprüft eine Klasse ([T]) auf Gültigkeit
 class BeanValidator<T> {
     final _logger = new Logger('beanvalidator.BeanValidator');
 
     BeanValidator() {
     }
 
+    /// Überprüft das [obj] und gibt eine List mit [ViolationInfo]s zurück.
+    /// Die Liste kann auch leer sein wenn keine Violations aufgetreten sind.
+    ///
+    /// Alternativ zu dieser Funktion gibt es [verify]
     List<ViolationInfo> validate(final T obj) {
         Validate.notNull(obj);
         return _validate(obj).values.toList();
+    }
+
+    /// Überprüft das [obj] und wirft eine [ViolationException] wenn es Probleme mit dem Objekt
+    /// gibt.
+    ///
+    /// Alternativ zu dieser Funktion gibt es [validate]
+    void verify(final T obj) {
+        Validate.notNull(obj);
+        final List<ViolationInfo> violations = validate(obj);
+        if(violations.isNotEmpty) {
+            throw new ViolationException(violations);
+        }
     }
 
     // -- private -------------------------------------------------------------

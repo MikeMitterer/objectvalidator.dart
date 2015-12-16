@@ -10,7 +10,7 @@ test() {
 @Task()
 @Depends(analyze)
 testUnit() {
-    new TestRunner().test(files: "test/unit");
+    new TestRunner().testAsync(files: "test/unit");
 
     // Alle test mit @TestOn("content-shell") im header
     // new TestRunner().test(files: "test/unit",platformSelector: "content-shell");
@@ -27,11 +27,11 @@ analyze() {
     Analyzer.analyze("test");
 }
 
-@DefaultTask()
-@Depends(test)
-build() {
-  Pub.build();
-}
+//@DefaultTask()
+//@Depends(test)
+//build() {
+//  Pub.build();
+//}
 
 @Task()
 clean() => defaultClean();

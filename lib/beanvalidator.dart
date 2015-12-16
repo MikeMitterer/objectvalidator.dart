@@ -1,5 +1,7 @@
 library beanvalidator;
 
+import 'dart:collection';
+
 import 'package:beanvalidator/constraints.dart' as bv;
 import 'package:l10n/l10n.dart';
 
@@ -17,8 +19,9 @@ import 'package:logging/logging.dart';
 
 import 'package:validate/validate.dart';
 
-
 export 'package:beanvalidator/constraints.dart';
 
-part 'src/beanvalidator/ViolationInfo.dart';
-part 'src/beanvalidator/BeanValidator.dart';
+part 'beanvalidator/BeanValidator.dart';
+part 'beanvalidator/ViolationException.dart';
+part 'beanvalidator/ViolationInfo.dart';
+
