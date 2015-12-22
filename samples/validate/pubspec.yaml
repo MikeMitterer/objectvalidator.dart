@@ -1,0 +1,27 @@
+name: validate_sample
+version: 0.0.1
+description: Material Design Lite 'MDL Article Template'
+author: <Mike Mitterer> <office@mikemitterer.at>
+#homepage: https://www.example.com
+
+environment:
+  sdk: '>=1.12.0 <2.0.0'
+
+dependencies:
+  browser: '^0.10.0'
+
+  mdl: '^1.13.0'
+
+  logging: '^0.11.0'
+  logging_handlers: '^0.8.0'
+  console_log_handler: '^0.1.0'
+
+  di: '^3.3.0'
+
+  reflectable: '0.4.0'
+
+  beanvalidator:
+    path: '../../'
+
+transformers:
+  - di

@@ -240,6 +240,6 @@ main() {
 void configLogging() {
     hierarchicalLoggingEnabled = true;
 
-    Logger.root.level = Level.INFO;
+    Logger.root.level = Level.FINE;
     Logger.root.onRecord.listen(new LogPrintHandler());
 }

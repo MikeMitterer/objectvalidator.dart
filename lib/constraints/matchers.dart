@@ -2,7 +2,9 @@ part of beanvalidator.constraints;
 
 m.Matcher isBetweenMinus180AndPlus180() => m.allOf(m.greaterThanOrEqualTo(-180.0), m.lessThanOrEqualTo(180));
 
+@metareflector
 abstract class Constraint extends m.Matcher implements Translatable {
+
     /// Translatable message
     final L10N message;
 
@@ -13,6 +15,7 @@ abstract class Constraint extends m.Matcher implements Translatable {
     L10N get l10n => message;
 
     String get valueToCheckAgainst;
+
 }
 
 /// Wird z.B. bei Location verwendet um die Grad auf -90 bzw. +90 zu begrenzen
