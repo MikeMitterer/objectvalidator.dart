@@ -11,7 +11,7 @@ import 'package:beanvalidator/beanvalidator.dart';
 class UsernamePassword {
 
     @EMail(message: const L10N( "{{value}} is not a valid eMail address"))
-    final String username;
+    String username;
 
     @Password(message: const L10N( "{{value}} is not a valid password"))
     final String password;
@@ -32,10 +32,14 @@ main() async {
 
             final UsernamePassword userpassword = new UsernamePassword("office@mikemitterer.at", "12345678aA#");
             final BeanValidator<UsernamePassword> beanValidator = new BeanValidator<UsernamePassword>();
-            final List<ViolationInfo> violationinfos = beanValidator.validate(userpassword);
+            List<ViolationInfo> violationinfos = beanValidator.validate(userpassword);
 
-            _logger.info("Violoations: ${violationinfos.join(", ")}");
+            _logger.info("Violoations I: ${violationinfos.length == 0 ? 'no violations' : throw 'Pfhuuu - sollte nicht kommen!'}");
 
+            userpassword.username = "test";
+            violationinfos = beanValidator.validate(userpassword);
+
+            _logger.info("Violoations II: ${violationinfos.first.l10n.message}");
 
         });
     }
@@ -48,7 +52,7 @@ void configLogging() {
 
     // now control the logging.
     // Turn off all logging first
-    Logger.root.level = Level.FINE;
+    Logger.root.level = Level.INFO;
     Logger.root.onRecord.listen(new LogConsoleHandler());
 }
 

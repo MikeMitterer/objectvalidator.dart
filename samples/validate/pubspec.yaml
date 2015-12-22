@@ -25,3 +25,7 @@ dependencies:
 
 transformers:
   - di
+  - reflectable:
+      entry_points:
+        - web/main.dart # The path to your main file
+#      formatted: true # Optional.
