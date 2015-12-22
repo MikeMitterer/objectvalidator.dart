@@ -10,7 +10,7 @@ import 'package:reflectable/reflectable.dart';
 class Reflector extends Reflectable {
     const Reflector()
         : super(
-            invokingCapability,metadataCapability
+            invokingCapability,metadataCapability, declarationsCapability
         );
 }
 
@@ -18,7 +18,7 @@ const reflector = const Reflector();
 
 class MetaReflector extends Reflectable {
     const MetaReflector()
-        : super(metadataCapability,subtypeQuantifyCapability );
+        : super(metadataCapability,subtypeQuantifyCapability, declarationsCapability );
 }
 const metareflector = const MetaReflector();
 

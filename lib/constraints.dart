@@ -17,7 +17,10 @@ part 'constraints/matchers.dart';
 ///
 ///     print(cmAnnotation.simpleName)
 class MetaReflector extends Reflectable {
-    const MetaReflector()
-        : super(metadataCapability,subtypeQuantifyCapability);
+    const MetaReflector() : super(
+            metadataCapability,
+            subtypeQuantifyCapability,
+            declarationsCapability // Recommendation http://goo.gl/OlUri0
+    );
 }
 const metareflector = const MetaReflector();

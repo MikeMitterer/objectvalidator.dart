@@ -2,22 +2,10 @@ library beanvalidator;
 
 import 'dart:collection';
 
-import 'package:reflectable/reflectable.dart';
 import 'package:beanvalidator/constraints.dart' as bv;
 import 'package:l10n/l10n.dart';
-
-//@MirrorsUsed(
-//
-//    /// Annotations
-//    metaTargets: const [ bv.Constraint, bv.Range, bv.Pattern, bv.EMail, bv.Uuid,
-//        bv.Password, bv.NotEmptyAndNotNull, bv.VObject, bv.MinLength ],
-//
-//    /// Necessary to get access to [Constraints.l10n] for example
-//    targets: const [ "beanvalidator.constraints" ]
-//)
-//import 'dart:mirrors';
 import 'package:logging/logging.dart';
-
+import 'package:reflectable/reflectable.dart';
 import 'package:validate/validate.dart';
 
 export 'package:beanvalidator/constraints.dart';
@@ -29,17 +17,14 @@ part 'beanvalidator/ViolationInfo.dart';
 class BeanReflector extends Reflectable {
     const BeanReflector()
         : super(
-        typeAnnotationDeepQuantifyCapability ,
+            declarationsCapability, // Recommendation http://goo.gl/OlUri0
             instanceInvokeCapability,
-            invokingCapability,
             metadataCapability,
             nameCapability,
             reflectedTypeCapability,
             superclassQuantifyCapability,
-            typeAnnotationQuantifyCapability,
-            typeCapability,
             typeRelationsCapability
-    ); // Request the capability to invoke methods.
+    );
 }
 
 const BeanReflector beanreflector = const BeanReflector();
