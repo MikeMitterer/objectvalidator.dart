@@ -19,7 +19,7 @@ dependencies:
   l10n:
     path: /Volumes/Daten/DevLocal/DevDart/L10N4Dart
 
-  reflectable: '0.4.0'
+  reflectable: '^0.5.0'
 
 dev_dependencies:
   grinder: 'any'
