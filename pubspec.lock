@@ -4,7 +4,7 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.27.1"
+    version: "0.26.1+14"
   ansicolor:
     description: ansicolor
     source: hosted
@@ -16,7 +16,7 @@ packages:
   async:
     description: async
     source: hosted
-    version: "1.5.0"
+    version: "1.6.0"
   barback:
     description: barback
     source: hosted
@@ -36,7 +36,7 @@ packages:
   code_transformers:
     description: code_transformers
     source: hosted
-    version: "0.3.1"
+    version: "0.2.11"
   collection:
     description: collection
     source: hosted
@@ -56,7 +56,7 @@ packages:
   dart_style:
     description: dart_style
     source: hosted
-    version: "0.2.2"
+    version: "0.2.1"
   glob:
     description: glob
     source: hosted
@@ -134,7 +134,7 @@ packages:
   reflectable:
     description: reflectable
     source: hosted
-    version: "0.5.1"
+    version: "0.4.0"
   shelf:
     description: shelf
     source: hosted
@@ -162,7 +162,7 @@ packages:
   stack_trace:
     description: stack_trace
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   string_scanner:
     description: string_scanner
     source: hosted
@@ -175,6 +175,10 @@ packages:
     description: test
     source: hosted
     version: "0.12.6+2"
+  unittest:
+    description: unittest
+    source: hosted
+    version: "0.11.6+1"
   unscripted:
     description: unscripted
     source: hosted
