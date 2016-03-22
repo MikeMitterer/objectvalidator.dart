@@ -25,3 +25,9 @@ part 'beanvalidator/BeanValidator.dart';
 part 'beanvalidator/ViolationException.dart';
 part 'beanvalidator/ViolationInfo.dart';
 
+class BeanReflector {
+    const BeanReflector();
+}
+
+const BeanReflector beanreflector = const BeanReflector();
+

@@ -150,6 +150,25 @@ main() {
 
         });
         // End of '> MinLength' group
+
+        group('> Is Positive', () {
+            test('> Valid', () {
+                expect(1,new IsPositive(message: l10n("Hier nicht notwendig")));
+                expect(5.55,new IsPositive(message: l10n("Hier nicht notwendig")));
+                expect("27",new IsPositive(message: l10n("Hier nicht notwendig")));
+                expect("42.5",new IsPositive(message: l10n("Hier nicht notwendig")));
+            }); // end of 'Valid' test
+
+            test('> Invalue', () {
+                expect(0,isNot(new IsPositive(message: l10n("Hier nicht notwendig"))));
+                expect(true,isNot(new IsPositive(message: l10n("Hier nicht notwendig"))));
+                expect(false,isNot(new IsPositive(message: l10n("Hier nicht notwendig"))));
+                expect("-5",isNot(new IsPositive(message: l10n("Hier nicht notwendig"))));
+                expect(-5.6,isNot(new IsPositive(message: l10n("Hier nicht notwendig"))));
+
+            }); // end of 'Invalue' test
+
+        }); // End of '> Is Positive' group
     });
     // End of 'Matchers' group
 

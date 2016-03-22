@@ -44,6 +44,31 @@ const m.Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, me
 ///     expect(-50.1,isNot(isInRange(-50.0,50.0)));
 Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: l10n("Test"));
 
+/// Überprüft ob der Wert positiv (>0 ist)
+class IsPositive extends Constraint {
+
+    const IsPositive({ final L10N message}) : super(message);
+
+    bool matches(item, Map matchState) {
+        if(item is num) {
+            return item > 0;
+        }
+
+
+        try {
+            final double value = double.parse(item.toString());
+            return value > 0.0;
+        } on FormatException {
+            return false;
+        }
+    }
+
+    m.Description describe(m.Description description) => description.add("Value must be positive!");
+
+    String get valueToCheckAgainst => "0";
+
+}
+
 class NotNull extends Constraint {
     const NotNull({ final L10N message}) : super(message);
 
