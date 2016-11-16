@@ -76,7 +76,7 @@ class BeanValidator<T> {
             bool isRegularMethod = false;
 
             if(member is MethodMirror) {
-                final MethodMirror methodmirror = member as MethodMirror;
+                final MethodMirror methodmirror = member;
                 isGetter = methodmirror.isGetter;
                 isRegularMethod = methodmirror.isRegularMethod;
             }
@@ -92,7 +92,7 @@ class BeanValidator<T> {
     }
 
     _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
-        final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
+        final isRegularMethod = (member is MethodMirror) ? member.isRegularMethod : false;
 
         _logger.fine("    Metadata: ${element}");
 
@@ -115,7 +115,7 @@ class BeanValidator<T> {
             _logger.fine("               isConstraint: ${instanceParent is bv.Constraint ? 'yes' : 'no'}");
 
             if (instanceParent is bv.Constraint) {
-                final bv.Constraint constraint = instanceParent as bv.Constraint;
+                final bv.Constraint constraint = instanceParent;
                 _isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix);
             }
         }
@@ -123,7 +123,7 @@ class BeanValidator<T> {
     }
 
     bool _isConstraintCheckOK(final bv.Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
-        final isRegularMethod = (member is MethodMirror) ? (member as MethodMirror).isRegularMethod : false;
+        final isRegularMethod = (member is MethodMirror) ? member.isRegularMethod : false;
 
         // Invokes a getter and returns a mirror on the result. The getter
         // can be the implicit getter for a field or a user-defined getter

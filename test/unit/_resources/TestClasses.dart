@@ -68,8 +68,8 @@ import 'package:l10n/l10n.dart';
 
     final String eMail;
 
-    User(this.name,this.eMail) : super(33), userID = "135ea20d-f57b-4960-b544-ceafde88d9b8";
-    User.withAge(final int age,this.name,this.eMail) : super(age), userID = "135ea20d-f57b-4960-b544-ceafde88d9b8";
+    User(this.name,this.eMail) : userID = "135ea20d-f57b-4960-b544-ceafde88d9b8", super(33);
+    User.withAge(final int age,this.name,this.eMail) : userID = "135ea20d-f57b-4960-b544-ceafde88d9b8", super(age);
     User.withUUID(this.name,this.eMail,this.userID) : super(33);
 
     String getName() {

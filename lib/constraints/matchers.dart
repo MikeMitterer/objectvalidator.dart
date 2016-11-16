@@ -198,15 +198,15 @@ class MinLength extends Constraint {
         }
 
         if(item is String) {
-            return (item as String).length >= minLength;
+            return item.length >= minLength;
         }
 
         if(item is Map) {
-            return (item as Map).length >= minLength;
+            return item.length >= minLength;
         }
 
         if(item is Iterable) {
-            return (item as Iterable).length >= minLength;
+            return item.length >= minLength;
         }
 
         return false;
