@@ -21,14 +21,6 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                ansiColor('xterm') {
-                    // Platzhalter
-                    // sh 'grind deploy'
-                }
-            }
-        }
     }
 }
                        
