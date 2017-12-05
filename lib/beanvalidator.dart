@@ -59,7 +59,6 @@ class BeanReflector extends Reflectable {
             declarationsCapability, // Recommendation http://goo.gl/OlUri0
             instanceInvokeCapability,
             metadataCapability,
-            nameCapability,
             reflectedTypeCapability,
             superclassQuantifyCapability,
             typeRelationsCapability

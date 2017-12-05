@@ -4,21 +4,14 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.pub" />
-      <excludeFolder url="file://$MODULE_DIR$/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/samples/validate/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/samples/validate/build" />
-      <excludeFolder url="file://$MODULE_DIR$/samples/validate/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/samples/validate/web/images/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/samples/validate/web/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/test/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/test/unit/_resources/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/test/unit/beanvalidator/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/test/unit/constraints/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/test/unit/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/tool/packages" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="application" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">

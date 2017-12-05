@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
 
 import 'package:logging/logging.dart';
-import 'package:logging_handlers/logging_handlers_shared.dart';
 
 import 'package:beanvalidator/beanvalidator.dart';
 import '../_resources/TestClasses.dart';
+import '../config.dart';
 
 main() {
     final Logger _logger = new Logger("unit.test.BeanValidator");
@@ -163,7 +163,7 @@ main() {
             final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             violationinfos.forEach((final ViolationInfo info) {
-               _logger.info("${info.rootBean.runtimeType} -> ${info.message}");
+               _logger.fine("${info.rootBean.runtimeType} -> ${info.message}");
             });
             expect(violationinfos.length,1);
             expect(violationinfos[0].message,"Name lenght must be at least 4 characters...");
@@ -237,9 +237,3 @@ main() {
 
 }
 
-void configLogging() {
-    hierarchicalLoggingEnabled = true;
-
-    Logger.root.level = Level.FINE;
-    Logger.root.onRecord.listen(new LogPrintHandler());
-}

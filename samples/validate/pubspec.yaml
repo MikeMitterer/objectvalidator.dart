@@ -10,21 +10,27 @@ environment:
 dependencies:
   browser: '^0.10.0'
 
-  mdl: '^1.13.0'
+  mdl: # '^2.0.0'
+    path: /Volumes/Daten/DevLocal/DevDart/MaterialDesignLite
 
-  logging: '^0.11.0'
-  logging_handlers: '^0.8.0'
-  console_log_handler: '^0.1.0'
 
-  di: '^3.3.0'
+  logging: ^0.11.0
+  logging_handlers: ^0.8.0
+  console_log_handler: ^0.2.0
+    # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
 
-  reflectable: '0.4.0'
+  dice: ^1.7.0
+
+  reflectable: '^1.0.0'
 
   beanvalidator:
     path: '../../'
 
+  dart_to_js_script_rewriter: ^0.1.0
+  
 transformers:
-  - di
+  - dart_to_js_script_rewriter
+
   - reflectable:
       entry_points:
         - web/main.dart # The path to your main file
