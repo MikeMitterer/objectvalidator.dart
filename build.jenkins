@@ -3,7 +3,7 @@ pipeline {
         label 'kde_neon'
     }
     stages {
-        stage('Prepare1') {
+        stage('Prepare') {
             steps {
                 timeout(time: 15, unit: 'MINUTES') {
                     ansiColor('xterm') {
