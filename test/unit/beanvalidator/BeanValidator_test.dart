@@ -1,10 +1,8 @@
 import 'package:test/test.dart';
 
-import 'package:logging/logging.dart';
-
+import 'package:console_log_handler/print_log_handler.dart';
 import 'package:beanvalidator/beanvalidator.dart';
 import '../_resources/TestClasses.dart';
-import '../config.dart';
 
 main() {
     final Logger _logger = new Logger("unit.test.BeanValidator");

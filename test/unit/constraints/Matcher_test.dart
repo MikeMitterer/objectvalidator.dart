@@ -3,11 +3,9 @@ import 'package:test/test.dart';
 import 'package:l10n/l10n.dart';
 import 'package:beanvalidator/beanvalidator.dart';
 
-import '../config.dart';
-
 main() {
     // final Logger _logger = new Logger("test.Matchers");
-    configLogging();
+    // configLogging();
 
     group('Matchers', () {
 

@@ -9,8 +9,7 @@ dependencies:
 
   matcher: '^0.12.0'
 
-  console_log_handler: '>=0.5.0 <1.0.0'
-    # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler
+  logging: '>=0.11.3 <1.0.0'
 
   validate: '^1.0.0'
 
@@ -22,3 +21,6 @@ dependencies:
 dev_dependencies:
   grinder: 'any'
   test: 'any'
+
+  console_log_handler: '>=0.5.0 <1.0.0'
+    # path: /Volumes/Daten/DevLocal/DevDart/ConsoleLogHandler

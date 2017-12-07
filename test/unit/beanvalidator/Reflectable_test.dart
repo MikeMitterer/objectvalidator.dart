@@ -4,8 +4,6 @@ import 'package:test/test.dart';
 import 'package:reflectable/reflectable.dart';
 // import 'package:logging/logging.dart';
 
-import '../config.dart';
-
 // Annotate with this class to enable reflection.
 class Reflector extends Reflectable {
     const Reflector()
@@ -50,8 +48,8 @@ class A {
 
 main() async {
     // final Logger _logger = new Logger("test.Reflectable");
+    // configLogging();
     
-    configLogging();
     //await saveDefaultCredentials();
 
     group('Reflectable', () {
