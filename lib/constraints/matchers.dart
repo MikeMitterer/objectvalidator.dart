@@ -197,12 +197,11 @@ class MinLength extends Constraint {
 }
 
 class IsPositive extends Constraint {
-    static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
 
     const IsPositive({ final L10N message } ) :
-            super(message != null ? message : const L10N("Legth of {{field}} is invalid"));
+            super(message != null ? message : const L10N("{{field}} is not positive"));
 
-    m.Description describe(m.Description description) => description.add("Not a valid v4 UUID");
+    m.Description describe(m.Description description) => description.add("Not a positive value");
 
     @override
     bool matches(item, Map matchState) {
