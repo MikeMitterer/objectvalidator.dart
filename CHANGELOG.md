@@ -1,5 +1,10 @@
 # Change Log for beanvalidator
 
+## [Unreleased](http://github.com/mikemitterer/beanvalidator.dart/compare/v0.2...HEAD)
+
+### Feature
+* Added IsPostitive-Constraint [c815291](https://github.com/mikemitterer/beanvalidator.dart/commit/c8152918566bce7cbc31fd70c009771e99c723be)
+
 ## [v0.2](http://github.com/mikemitterer/beanvalidator.dart/compare/v0.2) - 2017-12-07
 
 ### Feature
