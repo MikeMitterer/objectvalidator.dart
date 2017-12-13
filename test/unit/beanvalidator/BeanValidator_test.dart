@@ -215,6 +215,25 @@ main() {
             expect(violationinfos2[0].message,"12345678aA is not a valid password");
 
         }); // end of 'UUID' test
+
+        test('> isPositive', () {
+            FileHandler fh = new FileHandler(1);
+
+            final BeanValidator<FileHandler> beanValidator = new BeanValidator<FileHandler>();
+            final List<ViolationInfo> violationinfos = beanValidator.validate(fh);
+
+            expect(violationinfos.length,0);
+
+            fh = new FileHandler(0);
+
+            final BeanValidator<FileHandler> beanValidator2 = new BeanValidator<FileHandler>();
+            final List<ViolationInfo> violationinfos2 = beanValidator2.validate(fh);
+
+            expect(violationinfos2.length,1);
+            expect(violationinfos2[0].message,"Filesize must be greater than 0");
+
+        }); // end of 'isPositive' test
+
     });
     // end 'BeanValidator' group
 

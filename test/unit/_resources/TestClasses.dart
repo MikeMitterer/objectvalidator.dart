@@ -139,3 +139,12 @@ class UsernamePassword {
 
     UsernamePassword(this.username, this.password);
 }
+
+@beanreflector
+class FileHandler {
+
+    @IsPositive(message: const L10N("Filesize must be greater than 0"))
+    final int filezize;
+
+    FileHandler(this.filezize);
+}

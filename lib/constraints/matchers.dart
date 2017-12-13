@@ -195,3 +195,30 @@ class MinLength extends Constraint {
 
     String get valueToCheckAgainst => "$minLength";
 }
+
+class IsPositive extends Constraint {
+    static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
+
+    const IsPositive({ final L10N message } ) :
+            super(message != null ? message : const L10N("Legth of {{field}} is invalid"));
+
+    m.Description describe(m.Description description) => description.add("Not a valid v4 UUID");
+
+    @override
+    bool matches(item, Map matchState) {
+        if(item == null) {
+            return false;
+        }
+
+        if(item is num) {
+            return item > 0;
+        }
+
+        return false;
+    }
+
+    String get valueToCheckAgainst => "> 0";
+
+}
+
+//const m.Matcher IsPositive = const IsPositive(message: const L10N("Nur für Annotation!"));

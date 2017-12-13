@@ -76,7 +76,7 @@ class BeanValidator<T> {
             bool isRegularMethod = false;
 
             if(member is MethodMirror) {
-                final MethodMirror methodmirror = member as MethodMirror;
+                final MethodMirror methodmirror = member;
                 isGetter = methodmirror.isGetter;
                 isRegularMethod = methodmirror.isRegularMethod;
             }
