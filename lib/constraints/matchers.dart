@@ -199,7 +199,7 @@ class MinLength extends Constraint {
 class IsPositive extends Constraint {
 
     const IsPositive({ final L10N message } ) :
-            super(message != null ? message : const L10N("{{field}} is not positive"));
+            super(message);
 
     m.Description describe(m.Description description) => description.add("Not a positive value");
 
