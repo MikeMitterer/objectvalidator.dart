@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'kde_neon'
+        label 'linux'
     }
     stages {
         stage('Prepare') {
@@ -18,13 +18,6 @@ pipeline {
                 ansiColor('xterm') {
                     //echo "PATH is: $PATH"
                     sh 'grind test'
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                ansiColor('xterm') {
-                    sh 'grind deploy'
                 }
             }
         }

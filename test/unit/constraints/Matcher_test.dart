@@ -1,13 +1,11 @@
 import 'package:test/test.dart';
 
 import 'package:l10n/l10n.dart';
-import 'package:logging/logging.dart';
-import 'package:logging_handlers/logging_handlers_shared.dart';
 import 'package:beanvalidator/beanvalidator.dart';
 
 main() {
     // final Logger _logger = new Logger("test.Matchers");
-    configLogging();
+    // configLogging();
 
     group('Matchers', () {
 
@@ -173,10 +171,4 @@ main() {
     // End of 'Matchers' group
 
 
-}
-void configLogging() {
-    hierarchicalLoggingEnabled = true;
-
-    Logger.root.level = Level.INFO;
-    Logger.root.onRecord.listen(new LogPrintHandler());
 }
