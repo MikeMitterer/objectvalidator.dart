@@ -167,7 +167,7 @@ class MinLength extends Constraint {
     final int minLength;
 
     const MinLength( this.minLength ,{ final L10N message } ) :
-        super(message != null ? message : const L10N("Legth of {{field}} is invalid"));
+        super(message);
 
 
     bool matches(item, Map matchState) {

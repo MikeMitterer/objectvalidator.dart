@@ -234,6 +234,15 @@ main() {
 
         }); // end of 'isPositive' test
 
+        test('> Range', () {
+            final person = new User.withAge(44,"Mike","office@mikemitterer.at");
+            final BeanValidator<User> beanValidator = new BeanValidator<User>();
+            final List<ViolationInfo> violationinfos = beanValidator.validate(person);
+
+            expect(violationinfos.length,0);
+
+        }); // end of 'Range' test
+
     });
     // end 'BeanValidator' group
 

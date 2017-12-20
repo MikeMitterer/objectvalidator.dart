@@ -3,17 +3,16 @@ import 'package:grinder/grinder.dart';
 main(args) => grind(args);
 
 @Task()
-@Depends(testUnit)
+@Depends(analyze, testUnit)
 test() {
 }
 
 @Task()
-@Depends(analyze)
 testUnit() {
     new TestRunner().testAsync(files: "test/unit");
 
     // Alle test mit @TestOn("content-shell") im header
-    // new TestRunner().test(files: "test/unit",platformSelector: "content-shell");
+    new TestRunner().test(files: "test/unit",platformSelector: "chrome");
 }
 
 @Task()
