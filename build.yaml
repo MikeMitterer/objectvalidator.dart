@@ -3,6 +3,9 @@ targets:
     builders:
       reflectable:
         generate_for:
-          - test/**_test.dart
+          exclude:
+            - test/**/Matcher_test.dart
+          include:
+            - test/**_test.dart
         options:
           formatted: true
