@@ -1,4 +1,5 @@
 # Change Log for objectvalidator
+Object validation library
 
 ## [Unreleased](http://github.com/mikemitterer/objectvalidator.dart/compare/v1.0...HEAD)
 
@@ -6,6 +7,7 @@
 * ObjectValidator goes public [1dafd61](https://github.com/mikemitterer/objectvalidator.dart/commit/1dafd6164809354a577c7fc25acfb43fee816a88)
 
 ### Refactor
+* Description + Homepage was missing in pubspec.yaml [ff1ad24](https://github.com/mikemitterer/objectvalidator.dart/commit/ff1ad240dd45fac1b52562a4ebcbdb521074a93c)
 * Added dryice as indirect dependency - needed by reflectable [fc213dd](https://github.com/mikemitterer/objectvalidator.dart/commit/fc213ddd78451aefaf96ea521017a6fc25f45cf7)
 
 ## [v1.0](http://github.com/mikemitterer/objectvalidator.dart/compare/v0.2...v1.0) - 2017-12-20
