@@ -16,6 +16,7 @@ abstract class Constraint extends m.Matcher implements Translatable {
 }
 
 /// Wird z.B. bei Location verwendet um die Grad auf -90 bzw. +90 zu begrenzen
+@constraint
 class Range extends Constraint {
     final double start;
     final double end;
@@ -45,6 +46,7 @@ const m.Matcher isInRangeBetween10And40 = const Range(start: 10.0, end: 40.0, me
 Range isInRange(final double vstart, final double vend) => new Range(start: vstart, end: vend, message: l10n("Test"));
 
 /// Überprüft ob der Wert positiv (>0 ist)
+@constraint
 class IsPositive extends Constraint {
 
     const IsPositive({ final L10N message}) : super(message);
@@ -69,6 +71,7 @@ class IsPositive extends Constraint {
 
 }
 
+@constraint
 class NotNull extends Constraint {
     const NotNull({ final L10N message}) : super(message);
 
@@ -81,6 +84,7 @@ class NotNull extends Constraint {
     String get valueToCheckAgainst => "null";
 }
 
+@constraint
 class Pattern extends Constraint {
     //static const String PATTERN_ALPHANUMERIC  = "^[a-zA-Z0-9öäüÖÄÜß]+\$";
     //static const String PATTERN_HEX           = "^(0x[a-fA-F0-9]+)|([a-fA-F0-9])+\$";
@@ -102,6 +106,7 @@ class Pattern extends Constraint {
     String get valueToCheckAgainst => pattern;
 }
 
+@constraint
 class EMail extends Pattern {
     /// ,9: TLD .localhost hat 9 Stellen
     static const String _PATTERN_EMAIL = "^([0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})\$";
@@ -115,6 +120,7 @@ class EMail extends Pattern {
 
 const m.Matcher isEMail = const EMail(message: const L10N("Nur für Annotation!"));
 
+@constraint
 class Uuid extends Pattern {
     static const String _PATTERN_UUID = "^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}\$";
 
@@ -127,6 +133,7 @@ class Uuid extends Pattern {
 
 const m.Matcher isUuid = const Uuid(message: const L10N("Nur für Annotation!"));
 
+@constraint
 class Password extends Pattern {
     static const String _PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%?])[0-9a-zA-Z@#\$%?]{8,15}\$";
 
@@ -139,6 +146,7 @@ class Password extends Pattern {
 
 const m.Matcher isPassword = const Password(message: const L10N("Nur für Annotation!"));
 
+@constraint
 class NotEmptyAndNotNull extends Constraint {
 
     const NotEmptyAndNotNull({final L10N message}) : super(message);
@@ -164,6 +172,7 @@ class NotEmptyAndNotNull extends Constraint {
 const m.Matcher isNotEmptyAndNotNull = const NotEmptyAndNotNull(message: const L10N("Nur für Annontation"));
 
 /// Dient nur als "Marker" für eine "Unter-Validation-Object" - darf prinzipiell nicht null sein
+@constraint
 class VObject extends Constraint {
     const VObject({final L10N message}) : super(message);
 
@@ -184,7 +193,7 @@ class VObject extends Constraint {
 
 const m.Matcher isVObjectValid = const VObject(message: const L10N("Nur für Annotation"));
 
-
+@constraint
 class MinLength extends Constraint {
     final int minLength;
 

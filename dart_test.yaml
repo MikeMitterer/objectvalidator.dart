@@ -1,5 +1,5 @@
 # Browser-Based project - Test chrome by default.
-platforms: [ chrome, vm ]
+#platforms: [ chrome, vm ]
 
 paths:
   - test/unit

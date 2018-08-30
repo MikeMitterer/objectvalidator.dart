@@ -1,13 +1,20 @@
 import 'package:test/test.dart';
 
+//import 'package:reflectable/reflectable.dart';
 import 'package:logging/logging.dart';
+//import 'package:console_log_handler/print_log_handler.dart';
+//import 'package:console_log_handler/console_log_handler.dart';
 
-import 'package:beanvalidator/beanvalidator.dart';
+import 'package:objectvalidator/objectvalidator.dart';
 import '../_resources/TestClasses.dart';
+
+import 'ObjectValidator_test.reflectable.dart';
 
 main() {
     final Logger _logger = new Logger("unit.test.BeanValidator");
-    //configLogging();
+    //configLogging(show: Level.FINE);
+
+    initializeReflectable();
 
     // void _debugViolationInfo(final List<ViolationInfo> violationinfos) {
     //     violationinfos.forEach((final ViolationInfo info) {
@@ -15,14 +22,14 @@ main() {
     //     });
     // }
 
-    group('BeanValidator', () {
+    group('ObjectValidator', () {
         setUp(() {
         });
 
         test('> Name - not empty', () {
             final Name name = new Name("Mike");
 
-            final BeanValidator<Name> bv = new BeanValidator<Name>();
+            final ObjectValidator<Name> bv = new ObjectValidator<Name>();
             List<ViolationInfo> violationInfos = bv.validate(name);
 
             expect(violationInfos.length, 0);
@@ -40,14 +47,13 @@ main() {
 
             expect(violationInfos[0].message, "Firstname (abc) must be at least 4 characters long");
             expect(violationInfos[1].message, "Name must be at least 4 chars long but was only 3 characters long");
-
         });
         // end of 'Name - not empty' test
 
        test('> Inheritance', () {
            final Name2 name = new Name2("Mike");
 
-           final BeanValidator<Name2> bv = new BeanValidator<Name2>();
+           final ObjectValidator<Name2> bv = new ObjectValidator<Name2>();
            List<ViolationInfo> violationInfos = bv.validate(name);
 
            expect(violationInfos.length, 0);
@@ -72,7 +78,7 @@ main() {
         test('> Inheritance and ovwerwrite', () {
             final Name3 name = new Name3("Mike");
 
-            final BeanValidator<Name3> bv = new BeanValidator<Name3>();
+            final ObjectValidator<Name3> bv = new ObjectValidator<Name3>();
             List<ViolationInfo> violationInfos = bv.validate(name);
 
             expect(violationInfos.length, 0);
@@ -96,7 +102,7 @@ main() {
         test('> Inheritance and ovwerwrite II', () {
             final Name3 invalidName = new Name3("");
 
-            final BeanValidator<Name3> bv = new BeanValidator<Name3>();
+            final ObjectValidator<Name3> bv = new ObjectValidator<Name3>();
             List<ViolationInfo> violationInfos = bv.validate(invalidName);
 
             violationInfos = bv.validate(invalidName);
@@ -114,9 +120,24 @@ main() {
 
         }); // end of 'Inheritance and ovwerwrite II' test
 
+        test('> AnotherPerson', () {
+            final AnotherPerson person1 = AnotherPerson(55);
+            final ObjectValidator<AnotherPerson> ov = new ObjectValidator<AnotherPerson>();
+
+            List<ViolationInfo> violationInfos = ov.validate(person1);
+            expect(violationInfos.length, 0);
+
+            final AnotherPerson person2 = AnotherPerson(14);
+
+            violationInfos = ov.validate(person2);
+            expect(violationInfos.length, 1);
+
+            expect(violationInfos[0].message, "Age must be between 15 and 55 years");
+        }); // end of 'AnotherPerson' test
+
         test('> Empty List', () {
             final AreayCodes areacodes = new AreayCodes();
-            final BeanValidator<AreayCodes> beanvalidator = new BeanValidator<AreayCodes>();
+            final ObjectValidator<AreayCodes> beanvalidator = new ObjectValidator<AreayCodes>();
 
             List<ViolationInfo> violationinfos = beanvalidator.validate(areacodes);
             expect(violationinfos.length,1);
@@ -126,7 +147,7 @@ main() {
         test('> MinLength', () {
             final User user = new User("Joe", "joe@test.com");
 
-            final BeanValidator<User> beanValidator = new BeanValidator<User>();
+            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
@@ -136,7 +157,7 @@ main() {
         test('> Age in abstract BaseClass', () {
             final User user = new User.withAge(3,"Mike", "joe@test.com");
 
-            final BeanValidator<User> beanValidator = new BeanValidator<User>();
+            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
@@ -146,7 +167,7 @@ main() {
 
         test('> City', () {
             final City city = new City("",null);
-            final BeanValidator<City> beanValidator = new BeanValidator<City>();
+            final ObjectValidator<City> beanValidator = new ObjectValidator<City>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(city);
 
             expect(violationinfos.length,2);
@@ -158,7 +179,7 @@ main() {
                 new User("Joe", "office@mikemitterer.at")
             );
 
-            final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
+            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             violationinfos.forEach((final ViolationInfo info) {
@@ -173,7 +194,7 @@ main() {
         test('> UserInCityWith null', () {
             final UserInCity userInCity = new UserInCity(null, new User("Mike", "office@mikemitterer.at"));
 
-            final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
+            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             expect(violationinfos.length,1);
@@ -183,7 +204,7 @@ main() {
         test('> User in City with null and wrong Name', () {
             final UserInCity userInCity = new UserInCity(null, new User("Joe", "office@mikemitterer.at"));
 
-            final BeanValidator<UserInCity> beanValidator = new BeanValidator<UserInCity>();
+            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
 
             expect(violationinfos.length,2);
@@ -194,7 +215,7 @@ main() {
         test('> UUID', () {
             final User user = new User.withUUID("Mike", "joe@test.com","123");
 
-            final BeanValidator<User> beanValidator = new BeanValidator<User>();
+            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(user);
 
             expect(violationinfos.length,1);
@@ -206,7 +227,7 @@ main() {
             final UsernamePassword userpassword = new UsernamePassword("joe@test.com", "12345678aA%");
             final UsernamePassword invalidUP = new UsernamePassword("joe@test.com", "12345678aA");
 
-            final BeanValidator<UsernamePassword> beanValidator = new BeanValidator<UsernamePassword>();
+            final ObjectValidator<UsernamePassword> beanValidator = new ObjectValidator<UsernamePassword>();
             final List<ViolationInfo> violationinfos = beanValidator.validate(userpassword);
 
             expect(violationinfos.length,0);
@@ -223,7 +244,7 @@ main() {
         test('> ViolationException', () {
 
             final Name name = new Name("Mike");
-            final BeanValidator<Name> bv = new BeanValidator<Name>();
+            final ObjectValidator<Name> bv = new ObjectValidator<Name>();
 
             expect(() => bv.verify(name),isNot(throwsException));
 

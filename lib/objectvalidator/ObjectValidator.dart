@@ -1,10 +1,10 @@
-part of beanvalidator;
+part of objectvalidator;
 
 /// Überprüft eine Klasse ([T]) auf Gültigkeit
-class BeanValidator<T> {
+class ObjectValidator<T> {
     final _logger = new Logger('beanvalidator.BeanValidator');
 
-    BeanValidator() {
+    ObjectValidator() {
     }
 
     /// Überprüft das [obj] und gibt eine List mit [ViolationInfo]s zurück.
@@ -35,10 +35,10 @@ class BeanValidator<T> {
     Map<String,ViolationInfo> _validate(final obj,{ final bool useKeyPrefix: false }) {
         final Map<String,ViolationInfo> violationinfos = new Map<String,ViolationInfo>();
 
-        final mirror = reflect(obj);
+        final InstanceMirror mirror = validator.reflect(obj);
         final ClassMirror classMirror = mirror.type;
         final String mirrorType = _getMirrorType(mirror);
-        final String simplename = MirrorSystem.getName(classMirror.simpleName);
+        final String simplename = classMirror.simpleName;
 
         _logger.fine("Object ${obj.toString()} reflected to: ${mirrorType}");
         _logger.fine("   SimpleName: $simplename");
@@ -66,11 +66,11 @@ class BeanValidator<T> {
 
         // Durchlaufen aller Funktionen, Member usw. der Klasse
         for (var member in classMirror.declarations.values) {
-            final String simplename = MirrorSystem.getName(member.simpleName);
+            final String simplename = /*MirrorSystem.getName*/(member.simpleName);
 
             _logger.fine("Instance: ${member}");
             _logger.fine("Simple-name: $simplename");
-            _logger.fine("Qualified-name: ${MirrorSystem.getName(member.qualifiedName)}");
+            _logger.fine("Qualified-name: ${/*MirrorSystem.getName*/(member.qualifiedName)}");
 
             bool isGetter = false;
             bool isRegularMethod = false;
@@ -84,25 +84,42 @@ class BeanValidator<T> {
             _logger.fine("  isRegularMethod: $isRegularMethod");
 
             if (member.metadata.length > 0) {
-                member.metadata.forEach((final InstanceMirror element) {
+                member.metadata.forEach((final Object annotation) {
+                    _logger.fine("    Annotation: ${annotation}");
+
+                    final InstanceMirror element = validator.reflect(annotation);
                     _iterateThroughMetaData(simplename,element,member,obj,violationinfos,mirror,classMirror,keyPrefix);
                 });
             }
         }
     }
 
-    _iterateThroughMetaData(final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final ClassMirror classMirror,final String keyPrefix) {
-        final isRegularMethod = (member is MethodMirror) ? member.isRegularMethod : false;
+    _iterateThroughMetaData(
+        final String simplename,
+        final InstanceMirror element,
+        final member,
+        final obj,
+        final Map<String,ViolationInfo> violationinfos,
+        final InstanceMirror instanceMirror,
+        final ClassMirror classMirror,
+        final String keyPrefix) {
+        
+        _logger.fine("    Metadata: ${element.reflectee}");
 
-        _logger.fine("    Metadata: ${element}");
+        if(element.hasReflectee && element.reflectee is ov.VObject) {
+            final ov.Constraint constraint = element.reflectee as ov.Constraint;
 
-        if(element.hasReflectee && element.reflectee is bv.VObject) {
-            final bv.Constraint constraint = element.reflectee as bv.Constraint;
-            final value = mirror.getField(member.simpleName).reflectee;
+            _logger.fine("               simpleName: ${simplename}");
 
-            if(_isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix)) {
+            if(_isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,instanceMirror,keyPrefix)) {
 
-                final Map<String,ViolationInfo> test = _validate(isRegularMethod ? value() : value,useKeyPrefix: true);
+                final isRegularMethod = (member is MethodMirror) ? member.isRegularMethod : false;
+                final value = isRegularMethod ? instanceMirror.invoke(simplename, [] ) : instanceMirror.invokeGetter(simplename);
+
+                _logger.fine("                   isRegularMethod: ${isRegularMethod}");
+                _logger.fine("                   Value: ${value}");
+
+                final Map<String,ViolationInfo> test = _validate(/*isRegularMethod ? value() : */ value,useKeyPrefix: true);
 
                 violationinfos.addAll(test);
                 _logger.fine("           SubVioloationMap for ${member.simpleName} added");
@@ -112,29 +129,37 @@ class BeanValidator<T> {
             // ParentKlasse (Jede Konkrete ConstraintsKlasse hat Constraint als Parent (super-Klasse))
             final instanceParent = element.reflectee;
             _logger.fine("           Parent: ${instanceParent}");
-            _logger.fine("               isConstraint: ${instanceParent is bv.Constraint ? 'yes' : 'no'}");
+            _logger.fine("               isConstraint: ${instanceParent is ov.Constraint ? 'yes' : 'no'}");
 
-            if (instanceParent is bv.Constraint) {
-                final bv.Constraint constraint = instanceParent;
-                _isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,mirror,keyPrefix);
+            // Process only Constraints, ignore all other metadata
+            if (instanceParent is ov.Constraint) {
+                final ov.Constraint constraint = instanceParent;
+                _isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,instanceMirror,keyPrefix);
             }
         }
 
     }
 
-    bool _isConstraintCheckOK(final bv.Constraint constraint,final String simplename,final InstanceMirror element,final member,final obj, final Map<String,ViolationInfo> violationinfos,final InstanceMirror mirror,final String keyPrefix) {
+    bool _isConstraintCheckOK(
+            final ov.Constraint constraint,final String simplename,
+            final InstanceMirror instanceMirrorElement,final member,final obj,
+            final Map<String,ViolationInfo> violationinfos,
+            final InstanceMirror instanceMirror,final String keyPrefix) {
+
         final isRegularMethod = (member is MethodMirror) ? member.isRegularMethod : false;
 
         // Invokes a getter and returns a mirror on the result. The getter
         // can be the implicit getter for a field or a user-defined getter
         // method.
-        if(mirror != null && mirror is InstanceMirror) {
-            final field = mirror.getField(member.simpleName);
-            final reflectee = field.reflectee;
-            final value = isRegularMethod ? reflectee() : reflectee;
+        if(instanceMirror != null && instanceMirror is InstanceMirror) {
+//            final field = instanceMirror.invokeGetter(member.simpleName);
+//            final reflectee = (member as MethodMirror).re;
+            final value = isRegularMethod ? instanceMirror.invoke(simplename, [] ) : instanceMirror.invokeGetter(simplename);
 
+            _logger.fine("               Reflectee: ${instanceMirror.reflectee}");
+            _logger.fine("               Type: ${member.runtimeType}");
             _logger.fine("               SimpleName: ${member.simpleName}");
-            _logger.fine("               Field-Type: ${field.runtimeType}");
+            _logger.fine("               isRegularMethod: ${isRegularMethod}");
             _logger.fine("               Value: ${value}");
 
             // Wenn Value eine Funktion ist dann wird die Funktion selbst aufgerufen
@@ -142,7 +167,7 @@ class BeanValidator<T> {
             final String valueToCheckAgainst = constraint.valueToCheckAgainst;
             final L10N l10n = constraint.l10n;
 
-            final String violationKey = "$keyPrefix/$simplename/${MirrorSystem.getName(element.type.simpleName)}";
+            final String violationKey = "$keyPrefix/$simplename/${/*MirrorSystem.getName*/(instanceMirrorElement.type.simpleName)}";
 
             _logger.fine("                   Matches: " + (matches ? "yes" : "no"));
             _logger.fine("                   ValueToCheckAgainst: $valueToCheckAgainst");

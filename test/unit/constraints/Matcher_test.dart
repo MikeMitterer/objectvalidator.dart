@@ -1,11 +1,18 @@
 import 'package:test/test.dart';
+import 'package:logging/logging.dart';
+//import 'package:console_log_handler/print_log_handler.dart';
+//import 'package:console_log_handler/console_log_handler.dart';
 
 import 'package:l10n/l10n.dart';
-import 'package:beanvalidator/beanvalidator.dart';
+import 'package:objectvalidator/objectvalidator.dart';
+
+import 'Matcher_test.reflectable.dart';
 
 main() {
-    // final Logger _logger = new Logger("test.Matchers");
-    // configLogging();
+    final Logger _logger = new Logger("test.Matchers");
+    //configLogging(show: Level.FINE);
+
+    initializeReflectable();
 
     group('Matchers', () {
 

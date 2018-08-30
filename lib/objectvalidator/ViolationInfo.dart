@@ -1,4 +1,4 @@
-part of beanvalidator;
+part of objectvalidator;
 
 /**
  * Wenn in der "message" der Platzhaler {{field}} vorkommt wird dieser PH durch den
