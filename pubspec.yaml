@@ -1,6 +1,10 @@
 name: objectvalidator
 version: 1.0.4
 
+author: Mike Mitterer <office@mikemitterer.at>
+description: Object validation library
+homepage: https://github.com/MikeMitterer/objectvalidator.dart
+
 environment:
   sdk: ">=2.0.0 <3.0.0"
 
