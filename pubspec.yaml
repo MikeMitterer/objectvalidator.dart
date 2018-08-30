@@ -1,5 +1,5 @@
 name: objectvalidator
-version: 1.0.1
+version: 1.0.4
 
 environment:
   sdk: ">=2.0.0 <3.0.0"
