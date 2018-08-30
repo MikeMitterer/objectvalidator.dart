@@ -18,6 +18,10 @@ dependencies:
 
   reflectable: ^2.0.0
 
+  # Reflectable needs indirect dependency from l10n
+  # l10n uses dryice to inject the Translator
+  dryice: '>=2.0.22 <3.0.0'
+
 dev_dependencies:
   grinder: any
   test: any
