@@ -1,4 +1,4 @@
-part of beanvalidator.constraints;
+part of objectvalidator.constraints;
 
 m.Matcher isBetweenMinus180AndPlus180() => m.allOf(m.greaterThanOrEqualTo(-180.0), m.lessThanOrEqualTo(180));
 
