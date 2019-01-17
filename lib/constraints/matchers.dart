@@ -2,6 +2,9 @@ part of objectvalidator.constraints;
 
 m.Matcher isBetweenMinus180AndPlus180() => m.allOf(m.greaterThanOrEqualTo(-180.0), m.lessThanOrEqualTo(180));
 
+// https://pub.dartlang.org/packages/intl
+typedef String MessageCallback();
+
 abstract class Constraint extends m.Matcher implements Translatable {
     /// Translatable message
     final L10N message;

@@ -106,8 +106,8 @@ class ObjectValidator<T> {
         
         _logger.fine("    Metadata: ${element.reflectee}");
 
-        if(element.hasReflectee && element.reflectee is ov.VObject) {
-            final ov.Constraint constraint = element.reflectee as ov.Constraint;
+        if(element.hasReflectee && element.reflectee is VObject) {
+            final Constraint constraint = element.reflectee as Constraint;
 
             _logger.fine("               simpleName: ${simplename}");
 
@@ -129,11 +129,11 @@ class ObjectValidator<T> {
             // ParentKlasse (Jede Konkrete ConstraintsKlasse hat Constraint als Parent (super-Klasse))
             final instanceParent = element.reflectee;
             _logger.fine("           Parent: ${instanceParent}");
-            _logger.fine("               isConstraint: ${instanceParent is ov.Constraint ? 'yes' : 'no'}");
+            _logger.fine("               isConstraint: ${instanceParent is Constraint ? 'yes' : 'no'}");
 
             // Process only Constraints, ignore all other metadata
-            if (instanceParent is ov.Constraint) {
-                final ov.Constraint constraint = instanceParent;
+            if (instanceParent is Constraint) {
+                final Constraint constraint = instanceParent;
                 _isConstraintCheckOK(constraint,simplename,element,member,obj,violationinfos,instanceMirror,keyPrefix);
             }
         }
@@ -141,7 +141,7 @@ class ObjectValidator<T> {
     }
 
     bool _isConstraintCheckOK(
-            final ov.Constraint constraint,final String simplename,
+            final Constraint constraint,final String simplename,
             final InstanceMirror instanceMirrorElement,final member,final obj,
             final Map<String,ViolationInfo> violationinfos,
             final InstanceMirror instanceMirror,final String keyPrefix) {

@@ -7,7 +7,7 @@ import 'package:l10n/l10n.dart';
 import 'package:logging/logging.dart';
 import 'package:validate/validate.dart';
 
-import 'constraints.dart' as ov;
+import 'constraints.dart';
 export 'constraints.dart';
 
 part 'objectvalidator/ObjectValidator.dart';

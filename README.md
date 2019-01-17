@@ -43,7 +43,7 @@ Please file feature requests and bugs at the [issue tracker](https://github.com/
 
 ### License
 
-    Copyright 2018 Michael Mitterer, IT-Consulting and Development Limited,
+    Copyright 2019 Michael Mitterer, IT-Consulting and Development Limited,
     Austrian Branch
 
     Licensed under the Apache License, Version 2.0 (the "License");
