@@ -4,9 +4,6 @@ part of objectvalidator;
 class ObjectValidator<T> {
     final _logger = new Logger('beanvalidator.BeanValidator');
 
-    ObjectValidator() {
-    }
-
     /// Überprüft das [obj] und gibt eine List mit [ViolationInfo]s zurück.
     /// Die Liste kann auch leer sein wenn keine Violations aufgetreten sind.
     ///
