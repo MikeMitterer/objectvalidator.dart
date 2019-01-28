@@ -16,7 +16,7 @@ dependencies:
 
   validate: ^1.0.0
 
-  l10n: '>=1.4.0 <2.0.0'
+  l10n: '>=2.0.15 <3.0.0'
     # git: git@github.com:MikeMitterer/dart-l10n-gettext.git
     # path: /Volumes/Daten/DevLocal/DevDart/L10N4Dart
 

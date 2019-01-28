@@ -20,9 +20,9 @@
 part of objectvalidator;
 
 class ViolationException implements Exception {
-    final UnmodifiableListView<ViolationInfo> violations;
+    final UnmodifiableListView<String> violations;
 
-    ViolationException(final List<ViolationInfo> violations)
+    ViolationException(final List<String> violations)
         : this.violations = new UnmodifiableListView(violations)  {
         Validate.notEmpty(violations,"Makes not sense to throw a ViolationException with no violoations!");
     }
