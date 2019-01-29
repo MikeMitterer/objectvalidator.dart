@@ -103,15 +103,19 @@ class AnotherPerson implements Verifiable<AnotherPerson> {
     int get age => _age;
 
     @override
-    void validate({ifInvalid = throwViolationException}) {
-        final ov = ObjectValidator();
+    void validate({ifInvalid = throwViolationException}) => isAnotherPersonValid(this, ifInvalid: ifInvalid);
+}
 
-        ov.verify(age, Range(15, 55, onError: (final Range range)
-            => (final invalidValue)
-                => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+void isAnotherPersonValid<T>(final AnotherPerson ap,
+    { void Function(final AnotherPerson obj,final ObjectValidator ov) ifInvalid = throwViolationException }) {
 
-        ifInvalid(this,ov);
-    }
+    final ov = ObjectValidator();
+
+    ov.verify(ap.age, Range(15, 55, onError: (final Range range)
+        => (final invalidValue)
+            => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+
+    ifInvalid(ap,ov);
 }
 
 class User extends Person implements Verifiable<User> {

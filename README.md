@@ -14,15 +14,19 @@ class AnotherPerson implements Verifiable<AnotherPerson> {
     int get age => _age;
     
     @override
-    void validate({ifInvalid = throwViolationException}) {
-        final ov = ObjectValidator();
+    void validate({ifInvalid = throwViolationException}) => isAnotherPersonValid(this, ifInvalid: ifInvalid);
+}
 
-        ov.verify(age, Range(15, 55, onError: (final Range range)
-            => (final invalidValue)
-                => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+void isAnotherPersonValid<T>(final AnotherPerson ap,
+    { void Function(final AnotherPerson obj,final ObjectValidator ov) ifInvalid = throwViolationException }) {
 
-        ifInvalid(this,ov);
-    }
+    final ov = ObjectValidator();
+
+    ov.verify(ap.age, Range(15, 55, onError: (final Range range)
+        => (final invalidValue)
+            => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+
+    ifInvalid(ap,ov);
 }
 ```
 
@@ -57,6 +61,18 @@ If you want to check your object for being valid - it looks like this:
             expect(violations.length, 1);
             expect(violations.first, "Age must be between 15 and 55 but was 99!");
         }); 
+        test('> AnotherPerson - check with global function', () {
+            final person = AnotherPerson(99);
+
+            // If you use 'isAnotherPersonValid' it's not necessary to 
+            // implement the 'Verifiable<AnotherPerson>' interface for 'AnotherPerson' 
+            isAnotherPersonValid(person,ifInvalid: (final AnotherPerson ap, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length, 1);
+            expect(violations.first, "Age must be between 15 and 55 but was 99!");
+        }); 
+        
 ```
 
 For more - check out my tests...

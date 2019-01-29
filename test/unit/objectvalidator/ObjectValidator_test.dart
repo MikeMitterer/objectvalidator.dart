@@ -103,15 +103,26 @@ main() {
             expect(violations.first, "Age must be between 15 and 55 but was 99!");
         });
 
-        test('> Valid AreaCodes object should throw now exception', () {
+        test('> AnotherPerson - check with global function', () {
+            final person = AnotherPerson(99);
+
+            isAnotherPersonValid(person,ifInvalid: (final AnotherPerson ap, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length, 1);
+            expect(violations.first, "Age must be between 15 and 55 but was 99!");
+        });
+
+
+        test('> Valid AreaCodes object should throw no exception', () {
             final areacodes = new AreaCodes(codes: <String>["ab", "cd"]);
             expect(() => areacodes.validate(), isNot(throwsException));
-        }); // end of 'Valid AreaCodes object should throw now exception' test
+        });
 
         test('> AreaCodes has no codes - should throw Exception', () {
             final areacodes = new AreaCodes();
             expect(() => areacodes.validate(), throwsException);
-        }); // end of 'Empty List' test
+        });
 
         test('> MinLength', () {
             final user = new User("Joe", "joe@test.com");
