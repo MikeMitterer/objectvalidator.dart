@@ -202,7 +202,7 @@ main() {
                 => violations.addAll(ov.violations));
 
             expect(violations.length,1);
-            expect(violations[0],"123 is not a valid UUID!");
+            expect(violations[0],"'123' is not a valid UUID!");
 
         }); // end of 'UUID' test
 
@@ -222,8 +222,20 @@ main() {
                 => violations.addAll(ov.violations));
 
             expect(violations.length,1);
-            expect(violations.first, "12345678aA is not a valid password!");
+            expect(violations.first, "'12345678aA' is not a valid password!");
         });
+
+        test('> null for UsernamePassword should fail', () {
+            isUsernamePasswordValid(null,ifInvalid: (final UsernamePassword up, final ObjectValidator of) {
+                violations.addAll(of.violations);
+            });
+
+            print(violations);
+
+            expect(violations.length,3);
+            expect(violations.first, "Object must not be null!");
+        });
+
     });
     // end 'BeanValidator' group
 }

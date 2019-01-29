@@ -16,7 +16,7 @@ class EMail extends Validator<String, EMail> {
 
     static ErrorMessage _onError(final EMail pattern) {
         return (final value)
-            => l10n("${value?.toString()} must be a valid e-mail address!");
+            => l10n("'${value?.toString()}' is not a valid e-mail address!");
     }
 }
 

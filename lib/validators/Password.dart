@@ -16,7 +16,7 @@ class Password extends Validator<String, Password> {
 
     static ErrorMessage _onError(final Password pattern) {
         return (final value)
-            => l10n("${value?.toString()} is not a valid password!");
+            => l10n("'${value?.toString()}' is not a valid password!");
     }
 }
 

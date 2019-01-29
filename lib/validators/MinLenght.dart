@@ -29,7 +29,7 @@ class MinLength extends Validator<dynamic,MinLength> {
 
     static ErrorMessage _onError(final MinLength range) {
         return (final invalidValue)
-        => l10n("$invalidValue must have a minimum lenght of ${range.minLength}!");
+            => l10n("$invalidValue must have a minimum lenght of ${range.minLength}!");
     }
 }
 

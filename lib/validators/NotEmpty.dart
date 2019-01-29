@@ -23,7 +23,7 @@ class NotEmpty extends Validator<dynamic, NotEmpty> {
 
     static ErrorMessage _onError(final NotEmpty notNull) {
         return (final value)
-            => l10n("Value must not be empty but was ${value.toString()}!");
+            => l10n("Value must not be empty but was ${value?.toString()}!");
     }
 }
 

@@ -111,7 +111,7 @@ void isAnotherPersonValid(final AnotherPerson ap,
 
     final ov = ObjectValidator();
 
-    ov.verify(ap.age, Range(15, 55, onError: (final Range range)
+    ov.verify(ap?.age, Range(15, 55, onError: (final Range range)
         => (final invalidValue)
             => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
 
@@ -221,14 +221,20 @@ class UsernamePassword implements Verifiable<UsernamePassword>{
     UsernamePassword(this.username, this.password);
 
   @override
-  void validate({ifInvalid = throwViolationException}) {
-      final ov = ObjectValidator();
+  void validate({ifInvalid = throwViolationException})
+      => isUsernamePasswordValid(this,ifInvalid: ifInvalid);
+}
 
-      ov.verify(username, isEMail);
-      ov.verify(password, isPassword);
+void isUsernamePasswordValid(final UsernamePassword up,
+    { void Function(final UsernamePassword obj,final ObjectValidator ov) ifInvalid = throwViolationException }) {
 
-      ifInvalid(this,ov);
-  }
+    final ov = ObjectValidator();
+
+    ov.verify(up, isNotNull);
+    ov.verify(up?.username, isEMail);
+    ov.verify(up?.password, isPassword);
+
+    ifInvalid(up,ov);
 }
 
 class MyName implements Verifiable<MyName> {

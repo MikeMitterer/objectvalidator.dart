@@ -13,6 +13,8 @@ class NotNull extends Validator<dynamic, NotNull> {
 
     static ErrorMessage _onError(final NotNull notNull) {
         return (final value)
-            => l10n("Value must not be null!");
+            => l10n("Object must not be null!");
     }
 }
+
+const isNotNull = const NotNull();

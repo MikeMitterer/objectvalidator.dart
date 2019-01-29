@@ -14,7 +14,7 @@ class Uuid extends Validator<String, Uuid> {
 
     static ErrorMessage _onError(final Uuid pattern) {
         return (final value)
-            => l10n("${value?.toString()} is not a valid UUID!");
+            => l10n("'${value?.toString()}' is not a valid UUID!");
     }
 }
 
