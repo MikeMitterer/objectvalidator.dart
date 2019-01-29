@@ -7,10 +7,10 @@ part of objectvalidator;
 ///     }
 ///
 abstract class Verifiable<T> {
-    void validate({ void Function(final T obj,final ObjectValidator ov) onError = throwIfInvalid });
+    void validate({ void Function(final T obj,final ObjectValidator ov) ifInvalid = throwViolationException });
 }
 
-void throwIfInvalid<T>(final T obj, final ObjectValidator checker) {
+void throwViolationException<T>(final T obj, final ObjectValidator checker) {
     if(!checker.isValid) {
         throw ViolationException(checker.violations);
     }

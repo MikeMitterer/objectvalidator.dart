@@ -18,8 +18,11 @@ main() {
     //     });
     // }
 
+    final violations = List<String>();
+
     group('ObjectValidator', () {
         setUp(() {
+            violations.clear();
         });
 
         test('> Name should be valid', () {
@@ -28,7 +31,6 @@ main() {
         }); // end of 'Name should be valid' test
 
         test('> empty Name throws Exception', () {
-            final violations = List<String>();
             try {
                 final Name invalidName = new Name("");
                 invalidName.validate();
@@ -45,7 +47,6 @@ main() {
         });
 
         test('> Short Name throws Exception', () {
-            final violations = List<String>();
             try {
                 final Name invalidName = new Name("abc");
                 invalidName.validate();
@@ -60,7 +61,6 @@ main() {
         });
 
         test('> Short Name2 inherits from Name and throws Exception', () {
-            final violations = List<String>();
             try {
                 final Name invalidName = new Name2("abc");
                 invalidName.validate();
@@ -75,15 +75,14 @@ main() {
         });
 
         test('> AnotherPerson should be between 15 and 55 years old', () {
-            final AnotherPerson person = AnotherPerson(55);
+            final person = AnotherPerson(55);
             expect(() => person.validate(), isNot(throwsException));
-        }); // end of 'AnotherPerson' test
+        });
 
         test('> AnotherPerson must be between 15 and 55 years old and fails', () {
-            final AnotherPerson person = AnotherPerson(99);
+            final person = AnotherPerson(99);
             expect(() => person.validate(), throwsException);
 
-            final violations = List<String>();
             try {
                 person.validate();
             } on ViolationException catch(e) {
@@ -92,7 +91,17 @@ main() {
 
             expect(violations.length, 1);
             expect(violations.first, "Age must be between 15 and 55 but was 99!");
-        }); // end of 'AnotherPerson' test
+        });
+
+        test('> AnotherPerson - check with onError instead of Exception', () {
+            final person = AnotherPerson(99);
+
+            person.validate(ifInvalid: (final AnotherPerson ap, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length, 1);
+            expect(violations.first, "Age must be between 15 and 55 but was 99!");
+        });
 
         test('> Valid AreaCodes object should throw now exception', () {
             final areacodes = new AreaCodes(codes: <String>["ab", "cd"]);
@@ -104,115 +113,106 @@ main() {
             expect(() => areacodes.validate(), throwsException);
         }); // end of 'Empty List' test
 
-//        test('> MinLength', () {
-//            final User user = new User("Joe", "joe@test.com");
-//
-//            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
-//
-//            expect(violationinfos.length,1);
-//            expect(violationinfos[0].message,"Name lenght must be at least 4 characters...");
-//        }); // end of 'MinLength' test
+        test('> MinLength', () {
+            final user = new User("Joe", "joe@test.com");
 
-//        test('> Age in abstract BaseClass', () {
-//            final User user = new User.withAge(3,"Mike", "joe@test.com");
-//
-//            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
-//
-//            expect(violationinfos.length,1);
-//            expect(violationinfos[0].message,"Age must be between 5 and 99 years");
-//
-//        }); // end of 'Age in abstract BaseClass' test
+            user.validate(ifInvalid: (final User user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
 
-//        test('> City', () {
-//            final City city = new City("",null);
-//            final ObjectValidator<City> beanValidator = new ObjectValidator<City>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(city);
-//
-//            expect(violationinfos.length,2);
-//        }); // end of 'City' test
+            expect(violations.length,1);
+            expect(violations[0],"The name 'Joe' must have a minimum lenght of 4 characters!");
+        }); // end of 'MinLength' test
 
-//        test('> User in City', () {
-//            final UserInCity userInCity = new UserInCity(
-//                new City("6363", "Westendorf"),
-//                new User("Joe", "office@mikemitterer.at")
-//            );
-//
-//            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
-//
-//            violationinfos.forEach((final ViolationInfo info) {
-//               _logger.info("${info.rootBean.runtimeType} -> ${info.message}");
-//            });
-//            expect(violationinfos.length,1);
-//            expect(violationinfos[0].message,"Name lenght must be at least 4 characters...");
-//
-//            //_debugViolationInfo(violationinfos);
-//        }); // end of 'User in City' test
+        test('> Age must be between 5 and 99 years', () {
+            final user = User.withAge(3,"Mike", "joe@test.com");
 
-//        test('> UserInCityWith null', () {
-//            final UserInCity userInCity = new UserInCity(null, new User("Mike", "office@mikemitterer.at"));
-//
-//            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
-//
-//            expect(violationinfos.length,1);
-//            expect(violationinfos[0].message,"City must be valid");
-//        }); // end of 'UserInCityWith null' test
+            user.validate(ifInvalid: (final User user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
 
-//        test('> User in City with null and wrong Name', () {
-//            final UserInCity userInCity = new UserInCity(null, new User("Joe", "office@mikemitterer.at"));
-//
-//            final ObjectValidator<UserInCity> beanValidator = new ObjectValidator<UserInCity>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(userInCity);
-//
-//            expect(violationinfos.length,2);
-//            expect(violationinfos[0].message,"City must be valid");
-//            expect(violationinfos[1].message,"Name lenght must be at least 4 characters...");
-//        }); // end of 'User in City with null and wrong Name' test
+            expect(violations.length,1);
+            expect(violations[0],"Age must be between 5 and 99 years but was 3");
 
-//        test('> UUID', () {
-//            final User user = new User.withUUID("Mike", "joe@test.com","123");
-//
-//            final ObjectValidator<User> beanValidator = new ObjectValidator<User>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(user);
-//
-//            expect(violationinfos.length,1);
-//            expect(violationinfos[0].message,"UserID must be a UUID");
-//
-//        }); // end of 'UUID' test
+        }); // end of 'Age in abstract BaseClass' test
 
-//        test('> Password', () {
-//            final UsernamePassword userpassword = new UsernamePassword("joe@test.com", "12345678aA%");
-//            final UsernamePassword invalidUP = new UsernamePassword("joe@test.com", "12345678aA");
-//
-//            final ObjectValidator<UsernamePassword> beanValidator = new ObjectValidator<UsernamePassword>();
-//            final List<ViolationInfo> violationinfos = beanValidator.validate(userpassword);
-//
-//            expect(violationinfos.length,0);
-//
-//            final List<ViolationInfo> violationinfos2 = beanValidator.validate(invalidUP);
-//            expect(violationinfos2.length,1);
-//            expect(violationinfos2[0].message,"12345678aA is not a valid password");
-//
-//        }); // end of 'UUID' test
+        test('> City without zip and name should be invalid', () {
+            final city = City("",null);
+
+            city.validate(ifInvalid: (final City user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length,2);
+        }); // end of 'City' test
+
+        test("> User 'Joe' in City - name should be to short", () {
+            final userInCity = UserInCity(
+                City("6363", "Westendorf"),
+                User("Joe", "office@mikemitterer.at")
+            );
+
+            userInCity.validate(ifInvalid: (final UserInCity user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            // violations.forEach((final String info) {
+            //   print("UserInCity: $info");
+            // });
+            expect(violations.length,1);
+            expect(violations[0],"User-Verification failed with: 'The name 'Joe' must have a minimum lenght of 4 characters!'");
+        }); // end of 'User in City' test
+
+        test('> UserInCityWith null', () {
+            final userInCity = UserInCity(null, User("Mike", "office@mikemitterer.at"));
+
+            userInCity.validate(ifInvalid: (final UserInCity user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            // print(violations[0]);
+            
+            expect(violations.length,1);
+            expect(violations[0],"City-Verification failed with: 'null-object not allowed'");
+        }); // end of 'UserInCityWith null' test
+
+        test('> User in City with null and wrong Name', () {
+            final UserInCity userInCity = new UserInCity(null, new User("Joe", "office@mikemitterer.at"));
+
+            userInCity.validate(ifInvalid: (final UserInCity user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            // print(violations);
+
+            expect(violations.length,2);
+            expect(violations[0],"City-Verification failed with: 'null-object not allowed'");
+            expect(violations[1],"User-Verification failed with: 'The name 'Joe' must have a minimum lenght of 4 characters!'");
+        }); // end of 'User in City with null and wrong Name' test
+
+        test('> UUID', () {
+            final User user = User.withUUID("Mike", "joe@test.com","123");
+
+            user.validate(ifInvalid: (final User user, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length,1);
+            expect(violations[0],"123 is not a valid UUID!");
+
+        }); // end of 'UUID' test
+
+        test('> Valid password', () {
+            final up = UsernamePassword("joe@test.com", "12345678aA%");
+
+            up.validate(ifInvalid: (final UsernamePassword up, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length,0);
+        });
+
+        test('> Invalid password', () {
+            final up = UsernamePassword("joe@test.com", "12345678aA");
+
+            up.validate(ifInvalid: (final UsernamePassword up, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length,1);
+            expect(violations.first, "12345678aA is not a valid password!");
+        });
     });
     // end 'BeanValidator' group
-
-//    group('Exception', () {
-//        test('> ViolationException', () {
-//
-//            final Name name = new Name("Mike");
-//            final ObjectValidator<Name> bv = new ObjectValidator<Name>();
-//
-//            expect(() => bv.verify(name),isNot(throwsException));
-//
-//            final Name invalidName = new Name("");
-//            expect(() => bv.verify(invalidName),throwsException);
-//
-//        }); // end of 'ViolationException' test
-//
-//    }); // End of 'Exception' group
-
 }

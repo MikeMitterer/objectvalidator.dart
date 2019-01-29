@@ -23,17 +23,17 @@ class UserInCity implements Verifiable<UserInCity> {
 
     @override
     void validate(
-        { void Function(final UserInCity obj, final ObjectValidator ov) onError = throwIfInvalid }) {
+        { void Function(final UserInCity obj, final ObjectValidator ov) ifInvalid = throwViolationException }) {
 
         final ov = ObjectValidator();
 
         ov.verify(getCity(), IsValid(onError: (final IsValid isValid)
-            => (final invalidObj) => l10n("City-Verification failed with ${isValid.violations.join(", ")}!")));
+            => (final invalidObj) => l10n("City-Verification failed with: '${isValid.violations.join(", ")}'")));
 
         ov.verify(getUser(), IsValid(onError: (final IsValid isValid)
-            => (final invalidObj) => l10n("User-Verification failed with ${isValid.violations.join(", ")}!")));
+            => (final invalidObj) => l10n("User-Verification failed with: '${isValid.violations.join(", ")}'")));
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 }
 
@@ -48,11 +48,11 @@ class AreaCodes implements Verifiable<AreaCodes> {
     }
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
         ov.verify(getCodes(), isNotEmpty);
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 }
 
@@ -73,13 +73,13 @@ class City implements Verifiable<City> {
     }
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
         ov.verify(getZip(), isNotEmpty);
         ov.verify(getName(), isNotEmpty);
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 }
 
@@ -103,14 +103,14 @@ class AnotherPerson implements Verifiable<AnotherPerson> {
     int get age => _age;
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
         ov.verify(age, Range(15, 55, onError: (final Range range)
             => (final invalidValue)
                 => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 }
 
@@ -148,15 +148,23 @@ class User extends Person implements Verifiable<User> {
     }
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
         
-        ov.verify(getAge(), Range(5, 99));
-        ov.verifyAll(name, [ isNotEmpty, MinLength(4) ]);
+        ov.verify(getAge(), Range(5, 99,
+            onError: (final Range range) => (final invalidValue)
+                    => l10n("Age must be between ${range.start} and ${range.end} years "
+                       " but was $invalidValue")));
+
+        ov.verifyAll(name, [ isNotEmpty, MinLength(4,
+            onError: (final MinLength minLength) => (final invalidValue)
+                => l10n("The name '${invalidValue.toString()}' must have a "
+                   "minimum lenght of ${minLength.minLength} characters!")) ]);
+
         ov.verify(getEmail(), isEMail);
         ov.verify(getUserID(), isUuid);
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 }
 
@@ -174,7 +182,7 @@ class Name implements Verifiable<Name> {
     String get name => firstname;
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
         List<Validator> _forField(final String name) {
@@ -190,7 +198,7 @@ class Name implements Verifiable<Name> {
         ov.verifyAll(firstname, _forField("firstname"));
         ov.verifyAll(name, _forField("name"));
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
 
     }
 }
@@ -209,13 +217,13 @@ class UsernamePassword implements Verifiable<UsernamePassword>{
     UsernamePassword(this.username, this.password);
 
   @override
-  void validate({onError = throwIfInvalid}) {
+  void validate({ifInvalid = throwViolationException}) {
       final ov = ObjectValidator();
 
       ov.verify(username, isEMail);
       ov.verify(password, isPassword);
 
-      if(!ov.isValid) { onError(this,ov); }
+      ifInvalid(this,ov);
   }
 }
 
@@ -225,12 +233,12 @@ class MyName implements Verifiable<MyName> {
     MyName(this.age);
 
     @override
-    void validate({onError = throwIfInvalid}) {
+    void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
         ov.verify(age, isInRangeBetween10And40);
 
-        if(!ov.isValid) { onError(this,ov); }
+        ifInvalid(this,ov);
     }
 
 }

@@ -1,9 +1,6 @@
 import 'package:test/test.dart';
 import 'package:logging/logging.dart';
-//import 'package:console_log_handler/print_log_handler.dart';
-//import 'package:console_log_handler/console_log_handler.dart';
 
-import 'package:l10n/l10n.dart';
 import 'package:objectvalidator/objectvalidator.dart';
 import 'package:objectvalidator/validators.dart' as v;
 

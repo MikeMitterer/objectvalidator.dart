@@ -21,7 +21,6 @@ dependencies:
     # path: /Volumes/Daten/DevLocal/DevDart/L10N4Dart
 
 dev_dependencies:
-  grinder: any
   test: any
 
   console_log_handler: ^1.0.0

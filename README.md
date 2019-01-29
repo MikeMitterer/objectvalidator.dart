@@ -1,45 +1,68 @@
 ## ObjectValidator
-Object-Validator for Dart
+> Object-Validator for Dart
 
 ### Usage
 
-Define your class you want to validate:
+Define your class you want to validate and implement the `Verifiable<AnotherPerson>` interface
 
 ```dart
-@validator
-class AnotherPerson {
+class AnotherPerson implements Verifiable<AnotherPerson> {
     final int _age;
 
     AnotherPerson(this._age);
 
-    @Range(start: 15.0, end: 55.0, message: const L10N("Age must be between 15 and 55 years"))
     int get age => _age;
+    
+    @override
+    void validate({ifInvalid = throwViolationException}) {
+        final ov = ObjectValidator();
+
+        ov.verify(age, Range(15, 55, onError: (final Range range)
+            => (final invalidValue)
+                => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+
+        ifInvalid(this,ov);
+    }
 }
 ```
 
-Validation looks like this:
+If you want to check your object for being valid - it looks like this:
 
 ```dart
-final AnotherPerson person1 = AnotherPerson(55);
-final ObjectValidator<AnotherPerson> ov = new ObjectValidator<AnotherPerson>();
+        test('> AnotherPerson should be between 15 and 55 years old', () {
+            final person = AnotherPerson(55);
+            expect(() => person.validate(), isNot(throwsException));
+        }); 
 
-List<ViolationInfo> violationInfos = ov.validate(person1);
-expect(violationInfos.length, 0);
+        test('> AnotherPerson must be between 15 and 55 years old and fails', () {
+            final person = AnotherPerson(99);
+            expect(() => person.validate(), throwsException);
 
-final AnotherPerson person2 = AnotherPerson(14);
+            try {
+                person.validate();
+            } on ViolationException catch(e) {
+                violations.addAll(e.violations);
+            }
 
-violationInfos = ov.validate(person2);
-expect(violationInfos.length, 1);
+            expect(violations.length, 1);
+            expect(violations.first, "Age must be between 15 and 55 but was 99!");
+        }); 
 
-expect(violationInfos[0].message, "Age must be between 15 and 55 years");
+        test('> AnotherPerson - check with onError instead of Exception', () {
+            final person = AnotherPerson(99);
 
+            person.validate(ifInvalid: (final AnotherPerson ap, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length, 1);
+            expect(violations.first, "Age must be between 15 and 55 but was 99!");
+        }); 
 ```
 
 For more - check out my tests...
 
 ## Features and bugs
 Please file feature requests and bugs at the [issue tracker](https://github.com/MikeMitterer/objectvalidator.dart/issues).
-
 
 ### License
 
