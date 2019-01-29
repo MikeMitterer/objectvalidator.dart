@@ -1,6 +1,14 @@
 # Change Log for objectvalidator
 Object validation library
 
+## [Unreleased](http://github.com/mikemitterer/objectvalidator.dart/compare/v2.0...HEAD)
+
+### Docs
+* Readme shows how to use a global function for verification [26ae1f3](https://github.com/mikemitterer/objectvalidator.dart/commit/26ae1f3865a8a778700ca2cf1f599d95eb290cc6)
+
+### Refactor
+* Removed reflections [12dc5d7](https://github.com/mikemitterer/objectvalidator.dart/commit/12dc5d7728d7efe8363d0a96c30ba3d38b63db4a)
+
 ## [v2.0](http://github.com/mikemitterer/objectvalidator.dart/compare/v1.0...v2.0) - 2019-01-29
 
 ### Feature
