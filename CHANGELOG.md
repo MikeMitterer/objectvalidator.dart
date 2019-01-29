@@ -1,7 +1,7 @@
 # Change Log for objectvalidator
 Object validation library
 
-## [Unreleased](http://github.com/mikemitterer/objectvalidator.dart/compare/v1.0...HEAD)
+## [v2.0](http://github.com/mikemitterer/objectvalidator.dart/compare/v1.0...v2.0) - 2019-01-29
 
 ### Feature
 * ObjectValidator goes public [1dafd61](https://github.com/mikemitterer/objectvalidator.dart/commit/1dafd6164809354a577c7fc25acfb43fee816a88)
