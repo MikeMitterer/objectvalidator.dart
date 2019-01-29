@@ -17,7 +17,7 @@ class AnotherPerson implements Verifiable<AnotherPerson> {
     void validate({ifInvalid = throwViolationException}) => isAnotherPersonValid(this, ifInvalid: ifInvalid);
 }
 
-void isAnotherPersonValid<T>(final AnotherPerson ap,
+void isAnotherPersonValid(final AnotherPerson ap,
     { void Function(final AnotherPerson obj,final ObjectValidator ov) ifInvalid = throwViolationException }) {
 
     final ov = ObjectValidator();
