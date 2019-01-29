@@ -3,6 +3,9 @@ Object validation library
 
 ## [Unreleased](http://github.com/mikemitterer/objectvalidator.dart/compare/v2.0...HEAD)
 
+### Bugs
+* Used generic for isAnotherPersonValid [a1694db](https://github.com/mikemitterer/objectvalidator.dart/commit/a1694db07a61b9c5ded30af53c8b9b185fe52d19)
+
 ### Docs
 * Readme shows how to use a global function for verification [26ae1f3](https://github.com/mikemitterer/objectvalidator.dart/commit/26ae1f3865a8a778700ca2cf1f599d95eb290cc6)
 
