@@ -1,12 +1,16 @@
 part of objectvalidator.validators;
 
 class Password extends Validator<String, Password> {
+    /// Field name for error message
+    final String _fieldName;
 
     static const String _PATTERN_PASSWORD =
         "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%?])[0-9a-zA-Z@#\$%?]{8,15}\$";
 
-    const Password({ CheckAgainstOnError<Password> onError: _onError })
-        : super(onError);
+    const Password({final String fieldName = Validator.UNDEFINED_FIELD_NAME,
+        CheckAgainstOnError<Password> onError: _onError })
+        : this._fieldName = fieldName,
+            super(onError);
 
     @override
     String errorMessage(final invalidValue) => onError(this)(invalidValue);
@@ -15,8 +19,17 @@ class Password extends Validator<String, Password> {
     bool isValid(final String value) => checkPattern(_PATTERN_PASSWORD,value);
 
     static ErrorMessage _onError(final Password pattern) {
-        return (final value)
-            => l10n("'${value?.toString()}' is not a valid password!");
+        return (final value) {
+            if(pattern._fieldName == Validator.UNDEFINED_FIELD_NAME) {
+                return l10n("'[value]' is not a valid password!", {
+                    "value" : "${value?.toString()}"
+                });
+            }
+            return l10n("'[value]' is not a valid password for '[fieldname]'!", {
+                "value" : "${value?.toString()}",
+                "fieldname" : "${pattern._fieldName}"
+            });
+        };
     }
 }
 

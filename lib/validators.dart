@@ -18,6 +18,8 @@ typedef ErrorMessage CheckAgainstOnError<T>(final T value);
 typedef String ErrorMessage(final invalidValue);
 
 abstract class Validator<T,C> {
+    static const UNDEFINED_FIELD_NAME = "Undefined";
+
     final CheckAgainstOnError<C> onError;
 
     const Validator(this.onError);

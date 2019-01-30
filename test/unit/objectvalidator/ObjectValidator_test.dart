@@ -113,6 +113,16 @@ main() {
             expect(violations.first, "Age must be between 15 and 55 but was 99!");
         });
 
+        test('> AnotherPerson with age of 0 should have 2 violations', () {
+            final person = AnotherPerson(-1);
+
+            isAnotherPersonValid(person,ifInvalid: (final AnotherPerson ap, final ObjectValidator ov)
+                => violations.addAll(ov.violations));
+
+            expect(violations.length, 2);
+            expect(violations.first, "Age must be greater than 0 but was -1!");
+            expect(violations.last, "Age must be between 15 and 55 but was -1!");
+        });
 
         test('> Valid AreaCodes object should throw no exception', () {
             final areacodes = new AreaCodes(codes: <String>["ab", "cd"]);
@@ -152,6 +162,8 @@ main() {
                 => violations.addAll(ov.violations));
 
             expect(violations.length,2);
+            expect(violations[0],"'Zip-Code' must not be empty!");
+            
         }); // end of 'City' test
 
         test("> User 'Joe' in City - name should be to short", () {
@@ -202,7 +214,7 @@ main() {
                 => violations.addAll(ov.violations));
 
             expect(violations.length,1);
-            expect(violations[0],"'123' is not a valid UUID!");
+            expect(violations[0],"'123' is not a valid UUID for 'userID'!");
 
         }); // end of 'UUID' test
 
@@ -233,7 +245,10 @@ main() {
             print(violations);
 
             expect(violations.length,3);
-            expect(violations.first, "Object must not be null!");
+            expect(violations.first, "'UsernamePassword' must not be null!");
+            expect(violations[1], "'null' is not a valid e-mail address for 'username'!");
+            expect(violations[2], "'null' is not a valid password!");
+
         });
 
     });

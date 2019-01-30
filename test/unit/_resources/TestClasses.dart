@@ -28,10 +28,11 @@ class UserInCity implements Verifiable<UserInCity> {
         final ov = ObjectValidator();
 
         ov.verify(getCity(), IsValid(onError: (final IsValid isValid)
-            => (final invalidObj) => l10n("City-Verification failed with: '${isValid.violations.join(", ")}'")));
+            => (final invalidObj) => l10n("City-Verification failed with: '[violations]'", {
+                "violations" : isValid.violations.join(", ")
+            })));
 
-        ov.verify(getUser(), IsValid(onError: (final IsValid isValid)
-            => (final invalidObj) => l10n("User-Verification failed with: '${isValid.violations.join(", ")}'")));
+        ov.verify(getUser(), IsValid(fieldName: "User"));
 
         ifInvalid(this,ov);
     }
@@ -76,7 +77,7 @@ class City implements Verifiable<City> {
     void validate({ifInvalid = throwViolationException}) {
         final ov = ObjectValidator();
 
-        ov.verify(getZip(), isNotEmpty);
+        ov.verify(getZip(), NotEmpty(fieldName: l10n("Zip-Code") ));
         ov.verify(getName(), isNotEmpty);
 
         ifInvalid(this,ov);
@@ -111,9 +112,12 @@ void isAnotherPersonValid(final AnotherPerson ap,
 
     final ov = ObjectValidator();
 
-    ov.verify(ap?.age, Range(15, 55, onError: (final Range range)
-        => (final invalidValue)
-            => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!")));
+    ov.verifyAll(ap?.age, [
+        IsPositive(fieldName: "Age"),
+        Range(15, 55, onError: (final Range range)
+            => (final invalidValue)
+            => l10n("Age must be between ${range.start} and ${range.end} but was ${invalidValue.toString()}!"))
+    ]);
 
     ifInvalid(ap,ov);
 }
@@ -166,7 +170,7 @@ class User extends Person implements Verifiable<User> {
                    "minimum lenght of ${minLength.minLength} characters!")) ]);
 
         ov.verify(getEmail(), isEMail);
-        ov.verify(getUserID(), isUuid);
+        ov.verify(getUserID(), Uuid(fieldName: "userID"));
 
         ifInvalid(this,ov);
     }
@@ -230,8 +234,8 @@ void isUsernamePasswordValid(final UsernamePassword up,
 
     final ov = ObjectValidator();
 
-    ov.verify(up, isNotNull);
-    ov.verify(up?.username, isEMail);
+    ov.verify(up, NotNull(fieldName: "UsernamePassword"));
+    ov.verify(up?.username, EMail(fieldName: "username"));
     ov.verify(up?.password, isPassword);
 
     ifInvalid(up,ov);
